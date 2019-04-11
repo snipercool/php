@@ -45,27 +45,33 @@
 
                 <div class="form__field">
 					<label for="fullname">Full name</label>
-					<input type="text" id="fullname" name="fullname">
+					<input type="text" id="fullname" name="fullname" required>
                 </div>
                 
                 <div class="form__field">
 					<label for="username">Username</label>
-					<input type="text" id="username" name="username">
+					<input type="text" id="username" name="username" required>
+                </div>
+                
+                <div>
+					<p class="availabilityCheck">
+
+					</p>
 				</div>
 
 				<div class="form__field">
-					<label for="email">Email</label>
-					<input type="text" id="email" name="email">
+					<label for="email">Email<span class="form__hint"></span></label>
+					<input type="email" id="email" name="email" required> 
                 </div>
                 
 				<div class="form__field">
 					<label for="password">Password</label>
-					<input type="password" id="password" name="password">
+					<input type="password" id="password" name="password" required>
 				</div>
 
                 <div class="form__field">
 					<label for="password_confirmation">Confirm your password</label>
-					<input type="password" id="password_confirmation" name="password_confirmation">
+					<input type="password" id="password_confirmation" name="password_confirmation" required>
 				</div>
 
 				<div class="form__field">
@@ -75,6 +81,14 @@
             </form>
             
 		</div>
-	</div>
+    </div>
+
+    <script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/sockening.js"></script>
+
 </body>
 </html>

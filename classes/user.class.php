@@ -135,5 +135,24 @@
             
         }
 
+        public static function findByEmail($email){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from users where email = :email limit 1");
+            $statement->bindValue(":email", $email);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public static function isAccountAvailable($email){
+            $u = self::findByEmail($email);
+            
+            // PDO returns false if no records are found so let's check for that
+            if($u == false){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 
     }
