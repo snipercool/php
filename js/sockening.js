@@ -15,7 +15,8 @@ $("#email").on("keyup", function(e){
                 let availability = $(".availabilityCheck");
                 availability.css("display", "block");
                 availability.css("color", "red");
-                availability.html("Email not available");
+                availability.css("font-weight", "bold");
+                availability.html("This email is not available");
             }
         });
     e.preventDefault();
