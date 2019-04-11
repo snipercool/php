@@ -1,6 +1,8 @@
 <?php
 
     require_once("security.class.php");
+    require_once("db.class.php");
+
 
     class User {
         private $fullname;
@@ -117,7 +119,7 @@
                 $password = Security::hash($this->password);
         
                 try {
-                    $conn = new PDO( 'mysql:host=localhost;dbname=sockening', 'root', 'root', null);
+                    $conn = Db::getInstance();
                     $statement = $conn->prepare('INSERT INTO users (fullname, username, email, password) values (:fullname, :username, :email, :password)');
                     $statement->bindParam(':fullname', $this->fullname);
                     $statement->bindParam(':username', $this->username);
@@ -132,5 +134,6 @@
                 }
             
         }
+
 
     }
