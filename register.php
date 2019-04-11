@@ -15,14 +15,16 @@
 		}
 		$error = true;
 
-	}
+    }
+    
+   
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>The Sockening</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/master.css">
 </head>
 <body>
 	<div class="instaLogin instaLogin--register">
@@ -33,14 +35,14 @@
                 <?php if(isset($error)): ?>
 				<div class="form__error">
 					<p>
-						<?php echo $error; ?>
+						<?php echo "Something went wrong!"; ?>
 					</p>
 				</div>
                 <?php endif; ?>
 
 				<div class="form__field">
-					<label for="email">Email<span class="form__hint"></span></label>
-					<input value="" type="text" id="email" name="email">
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email">
 				</div>
 				<div class="form__field">
 					<label for="password">Password</label>
@@ -58,6 +60,5 @@
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>

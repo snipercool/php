@@ -74,7 +74,7 @@
             $password = Security::hash($this->password);
     
             try {
-                $conn = new PDO( 'mysql:host=localhost;dbname=phpinsta', 'root', 'root', null);
+                $conn = new PDO( 'mysql:host=localhost;dbname=php', 'root', 'root', null);
                 $statement = $conn->prepare('INSERT INTO user (email, password) values (:email, :password)');
                 $statement->bindParam(':email', $this->email);
                 $statement->bindParam(':password', $password);  
