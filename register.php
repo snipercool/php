@@ -4,7 +4,9 @@
 
 	
 	if ( !empty($_POST)) {
-		$user = new User();
+        $user = new User();
+		$user->setFullname($_POST['fullname']);
+		$user->setUsername($_POST['username']);        
 		$user->setEmail($_POST['email']);
 		$user->setPassword($_POST['password']);
 		$user->setPasswordConfirmation($_POST['password_confirmation']);
@@ -29,6 +31,7 @@
 <body>
 	<div class="instaLogin instaLogin--register">
 		<div class="form form--login">
+
 			<form action="" method="post">
 				<h2 form__title>Sign up for an account</h2>
 
@@ -40,10 +43,21 @@
 				</div>
                 <?php endif; ?>
 
+                <div class="form__field">
+					<label for="fullname">Full name</label>
+					<input type="text" id="fullname" name="fullname">
+                </div>
+                
+                <div class="form__field">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username">
+				</div>
+
 				<div class="form__field">
 					<label for="email">Email</label>
 					<input type="text" id="email" name="email">
-				</div>
+                </div>
+                
 				<div class="form__field">
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password">
@@ -56,8 +70,10 @@
 
 				<div class="form__field">
 					<input type="submit" value="Sign me up!" class="btn btn--primary">	
-				</div>
-			</form>
+                </div>
+                
+            </form>
+            
 		</div>
 	</div>
 </body>
