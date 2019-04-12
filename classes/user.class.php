@@ -144,15 +144,34 @@
         }
 
         public static function isAccountAvailable($email){
-            $u = self::findByEmail($email);
+            $e = self::findByEmail($email);
             
             // PDO returns false if no records are found so let's check for that
-            if($u == false){
+            if($e == false){
                 return true;
             } else {
                 return false;
             }
         }
+
+        public static function findByUsername($username){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("select * from users where username = :username limit 1");
+                $statement->bindValue(":username", $username);
+                $statement->execute();
+                return $statement->fetch(PDO::FETCH_ASSOC);
+            }
+    
+            public static function isUsernameAvailable($username){
+                $u = self::findByUsername($username);
+                
+                // PDO returns false if no records are found so let's check for that
+                if($u == false){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
 
     }

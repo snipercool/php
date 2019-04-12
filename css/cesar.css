@@ -74,8 +74,11 @@ body
 .form__field input[type=email] 
 {
   width: 100%;
-  padding: 0.3em;
+  padding: 0.5em;
   font-size: 1.4em;
+  border-radius: 30px;
+  border: 1px black;
+  margin-top: 5px;
 }
 
 .btn

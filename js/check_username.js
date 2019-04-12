@@ -1,23 +1,23 @@
-$("#email").on("keyup", function(e){
-    let email = $("#email").val();
-    console.log(email);
+$("#username").on("keyup", function(u){
+    let username = $("#username").val();
+    console.log(username);
     $.ajax({
         method: "POST",
-        url: "ajax/check_email.php",
-        data: { email: email},
+        url: "ajax/check_username.php",
+        data: { username: username},
         dataType:'json'
     })
         .done(function( res ) {
             if(res.status =="success"){
-                let availability = $(".availabilityCheck");
+                let availability = $(".availabilityCheck2");
                 availability.css("display", "none");
             } else {
-                let availability = $(".availabilityCheck");
+                let availability = $(".availabilityCheck2");
                 availability.css("display", "block");
                 availability.css("color", "red");
                 availability.css("font-weight", "bold");
-                availability.html("This email is not available");
+                availability.html("This username is not available");
             }
         });
-    e.preventDefault();
+    u.preventDefault();
 });
