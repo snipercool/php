@@ -2,6 +2,7 @@
     Class Post {
         private $image;
         private $description;
+        private $time;
 
         /**
          * Get the value of description
@@ -43,6 +44,26 @@
                 return $this;
         }
 
+        /**
+         * Get the value of time
+         */ 
+        public function getTime()
+        {
+                return $this->time;
+        }
+
+        /**
+         * Set the value of time
+         *
+         * @return  self
+         */ 
+        public function setTime($time)
+        {
+                $this->time = $time;
+
+                return $this;
+        }
+
         public function checkImage($image){
             // Check if image file is a actual image or fake image
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -61,9 +82,15 @@
             }
         }
 
-        public function uploadImage($image){
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $image)){
-                echo "file ". $image . "has been uploaded";
+        public function uploadImage(){
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $this->image)){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("insert into post (image, description, timestamp) values (:image, :description, :timestamp)");
+                $statement->bindParam(":image", $this->image);
+                $statement->bindParam(":description", $this->description);
+                $statement->bindParam(":timestamp", $this->time);
+                $statement->execute();
+                echo "file ". $this->image . " has been uploaded with description " . $this->description . " at " . $this->time;
             }else{
                 echo "file has not been uploaded";
             }
@@ -81,4 +108,6 @@
 
 
 
+
+        
     }

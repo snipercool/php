@@ -1,3 +1,17 @@
-body{
-    
+/** UPLOAD FORM **/
+
+#uploadForm{
+    background-color: red;
+    position: absolute;
+    display: inline-block;
+    width: 75%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
+
+
+
+/** FEED LIST **/

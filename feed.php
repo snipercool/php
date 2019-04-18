@@ -8,16 +8,18 @@
         $result = $statement->fetchAll();
         $temp = explode(".", $_FILES["fileToUpload"]["name"]);
         $newfilename = count($result) . "." . $temp[1];
-        $target_dir = "images/uploads/" . count($result);
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $target_dir = "images/uploads/";
+        $target_file = $target_dir . $newfilename;
         $post = new Post();
         if($post->checkImage($target_file)){
-            $post->uploadImage($target_file);
             $post->setImage($target_file);
+            if($post->checkDescription($_POST["description"])){
+                $post->setDescription($_POST["description"]);
+                $post->setTime(time());
+                $post->uploadImage();
+            }
         }
     }
-
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +30,7 @@
     <link rel="stylesheet" href="css/master.css">
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
         <p>Select image to upload:</p>
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="text" name="description" id="description">
