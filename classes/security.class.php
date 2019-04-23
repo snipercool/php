@@ -1,7 +1,7 @@
 <?php
 
     class Security {
-
+        
         public static function hash($password) {
             $options = [
                 'cost' => 12  
@@ -11,3 +11,4 @@
         }
 
     }
+

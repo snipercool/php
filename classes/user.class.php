@@ -111,6 +111,7 @@
                 return $this;
         }
 
+        
         /**
          * @return boolean - true if registration, false if unsuccessful.
          */
@@ -162,7 +163,7 @@
                 return $statement->fetch(PDO::FETCH_ASSOC);
             }
     
-            public static function isUsernameAvailable($username){
+        public static function isUsernameAvailable($username){
                 $u = self::findByUsername($username);
                 
                 // PDO returns false if no records are found so let's check for that
@@ -171,7 +172,6 @@
                 } else {
                     return false;
                 }
-            }
-
+        }
 
     }

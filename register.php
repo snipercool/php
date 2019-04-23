@@ -1,7 +1,6 @@
 <?php
 
 	require_once("classes/user.class.php");
-
 	
 	if ( !empty($_POST)) {
         $user = new User();
@@ -17,7 +16,7 @@
 		}
 		$error = true;
 
-    }
+	}
     
    
 
