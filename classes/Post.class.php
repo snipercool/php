@@ -2,7 +2,7 @@
     Class Post {
         private $image;
         private $description;
-        private $time;
+        private $timestamp;
 
         /**
          * Get the value of description
@@ -44,22 +44,22 @@
                 return $this;
         }
 
-        /**
-         * Get the value of time
+         /**
+         * Get the value of timestamp
          */ 
-        public function getTime()
+        public function getTimestamp()
         {
-                return $this->time;
+                return $this->timestamp;
         }
 
         /**
-         * Set the value of time
+         * Set the value of timestamp
          *
          * @return  self
          */ 
-        public function setTime($time)
+        public function setTimestamp($timestamp)
         {
-                $this->time = $time;
+                $this->timestamp = $timestamp;
 
                 return $this;
         }
@@ -85,12 +85,11 @@
         public function uploadImage(){
             if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $this->image)){
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("insert into post (image, description, timestamp) values (:image, :description, :timestamp)");
+                $statement = $conn->prepare("insert into post (image, description) values (:image, :description)");
                 $statement->bindParam(":image", $this->image);
                 $statement->bindParam(":description", $this->description);
-                $statement->bindParam(":timestamp", $this->time);
                 $statement->execute();
-                echo "file ". $this->image . " has been uploaded with description " . $this->description . " at " . $this->time;
+                echo "file ". $this->image . " has been uploaded with description " . $this->description;
             }else{
                 echo "file has not been uploaded";
             }
@@ -106,8 +105,4 @@
             }
         }
 
-
-
-
-        
     }
