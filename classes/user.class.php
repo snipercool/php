@@ -1,7 +1,7 @@
 <?php
 
-    require_once("security.class.php");
-    require_once("db.class.php");
+    require_once("Security.class.php");
+    require_once("Db.class.php");
 
 
     class User {

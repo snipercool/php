@@ -1,6 +1,6 @@
 <?php
-    include_once("../classes/user.class.php");
-    include_once("../classes/db.class.php");
+    include_once("../classes/User.class.php");
+    include_once("../classes/Db.class.php");
     $username = $_POST['username'];
     $response = [];
     if( User::isUsernameAvailable($username) ){

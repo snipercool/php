@@ -1,6 +1,6 @@
 <?php
 
-	require_once("classes/user.class.php");
+	require_once("classes/User.class.php");
 	
 	if ( !empty($_POST)) {
         $user = new User();
@@ -88,7 +88,6 @@
 		src="https://code.jquery.com/jquery-3.3.1.min.js"
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/check_email.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/check_username.js"></script>
 
