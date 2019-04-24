@@ -22,14 +22,12 @@
         try {
             if(move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)){
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("update user set avatar=':avatar' WHERE id='1'");
+                $statement = $conn->prepare("update user set avatar= :avatar WHERE id='1'");
                 $statement->bindParam(":avatar", $target_file);
                 
                 $statement->execute();
-                echo "file ". $target_file;
             }else{
                 echo "file has not been uploaded";
-                echo $target_file;
                 
             }
             
@@ -53,12 +51,11 @@
 <body>
     
     <div class="textupdate">
-        <form action="" method="post" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data">
         <div class="head">
-        <img src="<?php echo $data['avatar'] ?>" alt="avatar">
-        <div class="hidden" id="update"><input type="file" name="avatar"></div>
-        <button id="avatar">change avatar</button>
-    </div>
+            <img src="<?php echo $data['avatar'] ?>" alt="avatar">
+                <div id="update"><input type="file" name="avatar"></div>
+        </div>
         <div>
             <label for="firstname">Firstname</label><br>
             <input type="text" name="firstname" id="firstname" value="<?php echo $data['firstname'] ?>">
@@ -86,10 +83,5 @@
         <input type="submit" value="update">
         </form>
     </div>
-    <script>
-        $('#avatar').click(function(){
-            $('#update').removeClass("hidden");
-        });
-    </script>
 </body>
 </html>
