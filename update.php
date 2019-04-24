@@ -24,7 +24,6 @@
                 $conn = Db::getInstance();
                 $statement = $conn->prepare("update user set avatar= :avatar WHERE id='1'");
                 $statement->bindParam(":avatar", $target_file);
-                
                 $statement->execute();
             }else{
                 echo "file has not been uploaded";
