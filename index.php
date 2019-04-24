@@ -6,19 +6,35 @@
     $data = $result->fetch();
 
     
+
     if (!empty($_POST)) {
-        $avatar = $_POST['avatar'];
+        //$avatar = $_POST['avatar'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $description = $_POST['description'];
+
+        $target_dir = "images/uploads/";
+        $target_file = $target_dir . $_FILES["avatar"]["name"];
+
         try {
-            $update = $conn->prepare("UPDATE user SET firstname='$firstname', lastname='$lastname', avatar='$avatar', email='$email', username='$username', password='$password', description='$description',  WHERE id = 0");
-        $result = $update->execute();
-        var_dump($result);
-        } catch (\Throwable $th) {
+            if(move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("update user set avatar=':avatar' WHERE id='1'");
+                $statement->bindParam(":avatar", $target_file);
+                
+                $statement->execute();
+                echo "file ". $target_file;
+            }else{
+                echo "file has not been uploaded";
+                echo $target_file;
+                
+            }
+            
+       
+        } catch (Throwable $th) {
             //throw $th;
             var_dump($th);
         }
@@ -35,13 +51,14 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-    <div class="head">
+    
+    <div class="textupdate">
+        <form action="" method="post" method="post" enctype="multipart/form-data">
+        <div class="head">
         <img src="<?php echo $data['avatar'] ?>" alt="avatar">
-        <div class="hidden" id="update"><form action="" method="post"><input type="file" name="avatar" name="avatar"></form></div>
+        <div class="hidden" id="update"><input type="file" name="avatar"></div>
         <button id="avatar">change avatar</button>
     </div>
-    <div class="textupdate">
-        <form action="" method="post">
         <div>
             <label for="firstname">Firstname</label><br>
             <input type="text" name="firstname" id="firstname" value="<?php echo $data['firstname'] ?>">
