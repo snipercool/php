@@ -16,6 +16,7 @@
 		$user->setUsername($_POST['username']);        
 		$user->setEmail($_POST['email']);
         $user->setPassword($_POST['password']);
+        $user->setDescription($_POST['description']);
         $user->setAvatar($target_file);
 
         $user->update();
@@ -54,7 +55,7 @@
             <input type="text" name="email" id="email" value="<?php echo $data['email'] ?>">
         </div>
         <div>
-            <label for="password">Firstname</label><br>
+            <label for="password">Password</label><br>
             <input type="password" name="password" id="password" value="<?php echo $data['password'] ?>">
         </div>
         <div>

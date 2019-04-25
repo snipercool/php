@@ -9,6 +9,7 @@
         private $username;
         private $email;
         private $password;
+        private $description;
         private $passwordConfirmation;
 
         /**
@@ -131,6 +132,26 @@
                 return $this;
         }
         
+        /**
+         * Get the value of description
+         */ 
+        public function getDescription()
+        {
+                return $this->description;
+        }
+
+        /**
+         * Set the value of description
+         *
+         * @return  self
+         */ 
+        public function setDescription($description)
+        {
+                $this->description = $description;
+
+                return $this;
+        }
+        
         
 
         
@@ -163,17 +184,26 @@
                 try {
                         if(move_uploaded_file($_FILES["avatar"]["tmp_name"], $this->avatar)){
                                 $conn = Db::getInstance();
-                                $statement = $conn->prepare("update user set avatar= :avatar, fullname = :fullname, username = :username, email = :email, password = :password");
+                                $statement = $conn->prepare("update user set avatar= :avatar, fullname = :fullname, username = :username, email = :email, password = :password, description = :description");
                                 $statement->bindParam(":avatar", $this->avatar);
                                 $statement->bindParam(":fullname", $this->fullname );
                                 $statement->bindParam(":username", $this->username);
                                 $statement->bindParam(":email", $this->email);
+                                $statement->bindParam(":desxription", $this->description);
                                 $statement->bindParam(":password", $this->password);
 
                                 $statement->execute();
-                            }else{
-                                echo "file has not been uploaded";
-                                
+                            }
+                            else {
+                                $conn = Db::getInstance();
+                                $statement = $conn->prepare("update user set fullname = :fullname, username = :username, email = :email, password = :password, description = :description");
+                                $statement->bindParam(":fullname", $this->fullname );
+                                $statement->bindParam(":username", $this->username);
+                                $statement->bindParam(":email", $this->email);
+                                $statement->bindParam(":description", $this->description);
+                                $statement->bindParam(":password", $this->password);
+
+                                $statement->execute();
                             }
                 } catch (\Throwable $th) {
                         var_dump($th);
