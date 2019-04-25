@@ -105,4 +105,16 @@
             }
         }
 
+        public function createImageName(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from post");
+            $statement->execute();
+            $result = $statement->fetchAll();
+            $temp = explode(".", $_FILES["fileToUpload"]["name"]);
+            $newfilename = count($result) . "." . $temp[1];
+            $target_dir = "images/uploads/";
+            $target_file = $target_dir . $newfilename;
+            return $target_file;
+        }
+
     }

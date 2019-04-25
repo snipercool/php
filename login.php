@@ -8,10 +8,12 @@ if(!empty($_POST)){
 	$user = new User();
 	$user->setUsername($username);
 	$user->setPassword($password);
-    //check if user can login (use function)
-    if($user->canILogin()){
-        session_start();
-        $_SESSION['username'] = $username;
+	//check if user can login (use function)
+	$data = $user->CanILogin();
+    if($data != false){
+		session_start();
+		
+        $_SESSION['user'] =array($username);
 
         // if ok -> redirect to index.php
         header('Location: index.php');

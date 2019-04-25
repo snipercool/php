@@ -2,17 +2,10 @@
     require_once("bootstrap.php");
     
     if(!empty($_POST)){
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("select * from post");
-        $statement->execute();
-        $result = $statement->fetchAll();
-        $temp = explode(".", $_FILES["fileToUpload"]["name"]);
-        $newfilename = count($result) . "." . $temp[1];
-        $target_dir = "images/uploads/";
-        $target_file = $target_dir . $newfilename;
         $post = new Post();
-        if($post->checkImage($target_file)){
-            $post->setImage($target_file);
+        $image = $post->createImageName();
+        if($post->checkImage($image)){
+            $post->setImage($image);
             if($post->checkDescription($_POST["description"])){
                 $post->setDescription($_POST["description"]);
                 $post->uploadImage();

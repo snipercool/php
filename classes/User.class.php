@@ -182,7 +182,7 @@
                 $result = $statement->fetchAll();
                 if(!empty($result)){
                     if(password_verify($this->password, $result[0]['password'])){
-                        return true;
+                        return array($resut[0]['id'], $result[0]['username'], $result[0]['email']);
                     }
                 }
         }
