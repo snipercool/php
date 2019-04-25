@@ -170,7 +170,7 @@
         
                 try {
                     $conn = Db::getInstance();
-                    $statement = $conn->prepare('INSERT INTO users (fullname, username, email, password) values (:fullname, :username, :email, :password)');
+                    $statement = $conn->prepare('INSERT INTO user (fullname, username, email, password) values (:fullname, :username, :email, :password)');
                     $statement->bindParam(':fullname', $this->fullname);
                     $statement->bindParam(':username', $this->username);
                     $statement->bindParam(':email', $this->email);
@@ -254,6 +254,19 @@
                     return true;
                 } else {
                     return false;
+                }
+        }
+
+        function canILogin(){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("select * from user where username = :username");
+                $statement->bindParam(":username", $this->username);
+                $statement->execute();
+                $result = $statement->fetchAll();
+                if(!empty($result)){
+                    if(password_verify($this->password, $result[0]['password'])){
+                        return array($resut[0]['id'], $result[0]['username'], $result[0]['email']);
+                    }
                 }
         }
 
