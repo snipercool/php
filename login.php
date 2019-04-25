@@ -5,8 +5,11 @@ if(!empty($_POST)){
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+	$user = new User();
+	$user->setUsername($username);
+	$user->setPassword($password);
     //check if user can login (use function)
-    if(canILogin($username, $password)){
+    if($user->canILogin()){
         session_start();
         $_SESSION['username'] = $username;
 

@@ -174,4 +174,17 @@
                 }
         }
 
+        function canILogin(){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("select * from user where username = :username");
+                $statement->bindParam(":username", $this->username);
+                $statement->execute();
+                $result = $statement->fetchAll();
+                if(!empty($result)){
+                    if(password_verify($this->password, $result[0]['password'])){
+                        return true;
+                    }
+                }
+        }
+
     }
