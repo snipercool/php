@@ -3,12 +3,14 @@
 	require_once("classes/User.class.php");
 	
 	if ( !empty($_POST)) {
-        $user = new User();
+		
+		$user = new User();
 		$user->setFullname($_POST['fullname']);
 		$user->setUsername($_POST['username']);        
 		$user->setEmail($_POST['email']);
 		$user->setPassword($_POST['password']);
 		$user->setPasswordConfirmation($_POST['password_confirmation']);
+		
 		if($user->register()) {
 			session_start();
 			$_SESSION['email'] = $user->getEmail();
