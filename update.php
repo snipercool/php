@@ -9,34 +9,20 @@
 
     if (!empty($_POST)) {
         //$avatar = $_POST['avatar'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $description = $_POST['description'];
-
         $target_dir = "images/uploads/";
         $target_file = $target_dir . $_FILES["avatar"]["name"];
+        $user = new User();
+        $user->setFullname($_POST['fullname']);
+		$user->setUsername($_POST['username']);        
+		$user->setEmail($_POST['email']);
+        $user->setPassword($_POST['password']);
+        $user->setAvatar($target_file);
 
-        try {
-            if(move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)){
-                $conn = Db::getInstance();
-                $statement = $conn->prepare("update user set avatar= :avatar WHERE id='1'");
-                $statement->bindParam(":avatar", $target_file);
-                $statement->execute();
-            }else{
-                echo "file has not been uploaded";
-                
-            }
-            
+        $user->update();
        
-        } catch (Throwable $th) {
-            //throw $th;
-            var_dump($th);
-        }
-        
-    }
+
+
+       }
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,12 +42,8 @@
                 <div id="update"><input type="file" name="avatar"></div>
         </div>
         <div>
-            <label for="firstname">Firstname</label><br>
-            <input type="text" name="firstname" id="firstname" value="<?php echo $data['firstname'] ?>">
-        </div>
-        <div>
-            <label for="lastname">Lastname</label><br>
-            <input type="text" name="lastname" id="lastname" value="<?php echo $data['lastname'] ?>">
+            <label for="fullname">Fullname</label><br>
+            <input type="text" name="fullname" id="fullname" value="<?php echo $data['fullname'] ?>">
         </div>
         <div>
             <label for="username">Username</label><br>
