@@ -2,7 +2,7 @@
 include_once("functions.inc.php");
 // get user and password from POST
 if(!empty($_POST)){
-    $username = $_POST['email'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
     //check if user can login (use function)
@@ -34,14 +34,14 @@ if(!empty($_POST)){
 				<?php if( isset($error) ): ?>
 				<div class="form__error">
 					<p>
-						Sorry, we can't log you in with that email address and password. Can you try again?
+						Sorry, we can't log you in with that username and password. Can you try again?
 					</p>
 				</div>
 				<?php endif; ?>
 
 				<div class="form__field">
-					<label for="email">Email</label>
-					<input type="text" id="email" name="email">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username">
 				</div>
 				<div class="form__field">
 					<label for="password">Password</label>

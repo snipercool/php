@@ -1,6 +1,6 @@
 <?php 
     require_once("bootstrap.php");
-
+    
     if(!empty($_POST)){
         $conn = Db::getInstance();
         $statement = $conn->prepare("select * from post");

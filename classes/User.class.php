@@ -121,7 +121,7 @@
         
                 try {
                     $conn = Db::getInstance();
-                    $statement = $conn->prepare('INSERT INTO users (fullname, username, email, password) values (:fullname, :username, :email, :password)');
+                    $statement = $conn->prepare('INSERT INTO user (fullname, username, email, password) values (:fullname, :username, :email, :password)');
                     $statement->bindParam(':fullname', $this->fullname);
                     $statement->bindParam(':username', $this->username);
                     $statement->bindParam(':email', $this->email);
