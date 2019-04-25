@@ -38,7 +38,7 @@
     
     <div class="textupdate">
         <form action="" method="post" enctype="multipart/form-data">
-        <div class="head">
+        <div class="avatar">
             <img src="<?php echo $data['avatar'] ?>" alt="avatar">
                 <div id="update"><input type="file" name="avatar"></div>
         </div>

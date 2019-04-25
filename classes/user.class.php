@@ -190,7 +190,7 @@
                                 $statement->bindParam(":username", $this->username);
                                 $statement->bindParam(":email", $this->email);
                                 $statement->bindParam(":desxription", $this->description);
-                                $statement->bindParam(":password", $this->password);
+                                $statement->bindParam(":password", $password);
 
                                 $statement->execute();
                             }
@@ -201,7 +201,7 @@
                                 $statement->bindParam(":username", $this->username);
                                 $statement->bindParam(":email", $this->email);
                                 $statement->bindParam(":description", $this->description);
-                                $statement->bindParam(":password", $this->password);
+                                $statement->bindParam(":password", $password);
 
                                 $statement->execute();
                             }
