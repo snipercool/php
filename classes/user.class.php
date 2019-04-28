@@ -121,7 +121,7 @@
         
                 try {
                     $conn = Db::getInstance();
-                    $statement = $conn->prepare('INSERT INTO users (fullname, username, email, password) values (:fullname, :username, :email, :password)');
+                    $statement = $conn->prepare('INSERT INTO user (fullname, username, email, password) values (:fullname, :username, :email, :password)');
                     $statement->bindParam(':fullname', $this->fullname);
                     $statement->bindParam(':username', $this->username);
                     $statement->bindParam(':email', $this->email);
@@ -138,7 +138,7 @@
 
         public static function findByEmail($email){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select * from users where email = :email limit 1");
+            $statement = $conn->prepare("select * from user where email = :email limit 1");
             $statement->bindValue(":email", $email);
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
@@ -157,7 +157,7 @@
 
         public static function findByUsername($username){
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("select * from users where username = :username limit 1");
+                $statement = $conn->prepare("select * from user where username = :username limit 1");
                 $statement->bindValue(":username", $username);
                 $statement->execute();
                 return $statement->fetch(PDO::FETCH_ASSOC);
