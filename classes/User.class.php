@@ -9,10 +9,7 @@
         private $username;
         private $email;
         private $password;
-<<<<<<< HEAD
-=======
         private $description;
->>>>>>> nicolas
         private $passwordConfirmation;
 
         /**
@@ -115,8 +112,6 @@
                 return $this;
         }
 
-<<<<<<< HEAD
-=======
         /**
          * Get the value of avatar
          */ 
@@ -159,7 +154,6 @@
         
         
 
->>>>>>> nicolas
         
         /**
          * @return boolean - true if registration, false if unsuccessful.
@@ -185,8 +179,6 @@
             
         }
 
-<<<<<<< HEAD
-=======
         public function update(){
                 $password = Security::hash($this->password);
                 try {
@@ -218,10 +210,9 @@
                 }
         }
 
->>>>>>> nicolas
         public static function findByEmail($email){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select * from users where email = :email limit 1");
+            $statement = $conn->prepare("select * from user where email = :email limit 1");
             $statement->bindValue(":email", $email);
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
@@ -240,7 +231,7 @@
 
         public static function findByUsername($username){
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("select * from users where username = :username limit 1");
+                $statement = $conn->prepare("select * from user where username = :username limit 1");
                 $statement->bindValue(":username", $username);
                 $statement->execute();
                 return $statement->fetch(PDO::FETCH_ASSOC);
