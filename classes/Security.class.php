@@ -1,5 +1,4 @@
 <?php
-
     class Security {
         
         public static function hash($password) {
@@ -9,6 +8,4 @@
             $hash = password_hash($password, PASSWORD_DEFAULT, $options);
             return $hash;
         }
-
     }
-
