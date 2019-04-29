@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="css/master.css">
 </head>
 <body>
+
+    <header>
+        
+    </header>
     <div id="formContainer">
         <form method="post" enctype="multipart/form-data" id="uploadForm">
             <p>Select image to upload:</p>
