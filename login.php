@@ -11,10 +11,7 @@ if(!empty($_POST)){
 	//check if user can login (use function)
 	$data = $user->CanILogin();
     if($data != false){
-		session_start();
-		
-        $_SESSION['user'] =array($username);
-
+        $_SESSION['user'] = $data;
         // if ok -> redirect to index.php
         header('Location: index.php');
     }

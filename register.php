@@ -1,6 +1,6 @@
 <?php
 
-	require_once("classes/User.class.php");
+	require_once("bootstrap.php");
 	
 	if ( !empty($_POST)) {
 		
@@ -10,13 +10,18 @@
 		$user->setEmail($_POST['email']);
 		$user->setPassword($_POST['password']);
 		$user->setPasswordConfirmation($_POST['password_confirmation']);
-		
-		if($user->register()) {
-			session_start();
-			$_SESSION['username'] = $user->getUsername();
- 			header('location: index.php');
+
+		if($user->isAccountAvailable($_POST['email']) && $user->isUsernameAvailable($_POST['username'])){
+			$data = $user->register();
+			if($data != false) {
+				$_SESSION['user'] = $data;
+				//header('location: index.php');
+			}else{
+				$error = true;
+			}
 		}
-		$error = true;
+		
+		
 
 	}
     

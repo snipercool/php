@@ -126,8 +126,19 @@
                     $statement->bindParam(':username', $this->username);
                     $statement->bindParam(':email', $this->email);
                     $statement->bindParam(':password', $password);  
-                    $result = $statement->execute();
-                    return($result);
+                    $statement->execute();
+                
+                    $getData = $conn->prepare('select * from user where username = :username');
+                    $getData->bindParam(':username', $this->username);
+                    $getData->execute();
+                    $data = $getData->fetchAll();
+                
+                    if(!empty($data)){
+                        return array($data[0]['id'], $data[0]['username'], $data[0]['email']);
+                    }else{
+                        return false;
+                    }
+
         
                 } catch ( Throwable $t ) {
                     return false;
@@ -138,10 +149,16 @@
 
         public static function findByEmail($email){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select * from users where email = :email limit 1");
+            $statement = $conn->prepare("select * from user where email = :email limit 1");
             $statement->bindValue(":email", $email);
             $statement->execute();
-            return $statement->fetch(PDO::FETCH_ASSOC);
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if(!empty($result)){
+                    return true;
+            }else{
+                    return false;
+            }
+            
         }
 
         public static function isAccountAvailable($email){
@@ -157,10 +174,15 @@
 
         public static function findByUsername($username){
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("select * from users where username = :username limit 1");
+                $statement = $conn->prepare("select * from user where username = :username limit 1");
                 $statement->bindValue(":username", $username);
                 $statement->execute();
-                return $statement->fetch(PDO::FETCH_ASSOC);
+                $result =  $statement->fetch(PDO::FETCH_ASSOC);
+                if(!empty($result)){
+                        return true;
+                }else{
+                        return false;
+                }
             }
     
         public static function isUsernameAvailable($username){
@@ -182,9 +204,19 @@
                 $result = $statement->fetchAll();
                 if(!empty($result)){
                     if(password_verify($this->password, $result[0]['password'])){
-                        return array($resut[0]['id'], $result[0]['username'], $result[0]['email']);
+                        return array($result[0]['id'], $result[0]['username'], $result[0]['email']);
                     }
+                    return false;
                 }
+        }
+
+        function getUserById($id){
+                $conn = Db::getInstance();
+                $statement = $conn->prepare('select * from user where id = :id');
+                $statement->bindParam(':id', $id);
+                $statement->execute();
+                $result = $statement->fetch();
+                return $result;
         }
 
     }

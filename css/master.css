@@ -1,16 +1,51 @@
 /** GENERAL **/
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body{
     font-family: 'Josefin Sans';
+    background-color: #F7F2DC;
+}
+
+.hidden{
+    display: none;
+}
+
+/** NAV **/
+.navContainer{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 3%;
+}
+
+.nav{
+    position: relative;
+}
+
+.uploadBtn{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    cursor: pointer
 }
 
 
 /** UPLOAD FORM **/
 
 #formContainer{
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100vh;
     background-color: rgba(0,0,0,0.6);
+    z-index: 999;
 }
 
 #uploadForm{
@@ -66,3 +101,61 @@ body{
 
 
 /** FEED LIST **/
+.feedContainer{
+    display: inline-block;
+    width: 100%;
+}
+
+.feed{
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.post{
+    display: inline-block;
+    width: 90%;
+    margin: 5%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px 10px 0px 0px;
+    
+}
+
+.post-image{
+    display: inline-block;
+    margin: 2% auto;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.post-avatar{
+    display: inline-block;
+    width: 20%;
+    padding: 2%;
+}
+
+.post-username{
+    display: inline-block;
+    text-align: left;
+    padding: 2%;
+    width: 70%;
+}
+
+.post0{
+    background-color: #34AEA3;
+    
+}
+
+.post1{
+    background-color: #163F5F;
+}
+
+.post2{
+    background-color: #EA563C;
+}
+
+.post-user{
+    background-color: rgba(255, 255, 255, 0.5);
+    padding-top: 2%;
+    padding-bottom: 5%; 
+}
