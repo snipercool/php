@@ -9,6 +9,7 @@
         private $username;
         private $email;
         private $password;
+        private $description;
         private $passwordConfirmation;
 
         /**
@@ -111,6 +112,48 @@
                 return $this;
         }
 
+        /**
+         * Get the value of avatar
+         */ 
+        public function getAvatar()
+        {
+                return $this->avatar;
+        }
+
+        /**
+         * Set the value of avatar
+         *
+         * @return  self
+         */ 
+        public function setAvatar($avatar)
+        {
+                $this->avatar = $avatar;
+
+                return $this;
+        }
+        
+        /**
+         * Get the value of description
+         */ 
+        public function getDescription()
+        {
+                return $this->description;
+        }
+
+        /**
+         * Set the value of description
+         *
+         * @return  self
+         */ 
+        public function setDescription($description)
+        {
+                $this->description = $description;
+
+                return $this;
+        }
+        
+        
+
         
         /**
          * @return boolean - true if registration, false if unsuccessful.
@@ -145,6 +188,37 @@
         
                 }
             
+        }
+
+        public function update(){
+                $password = Security::hash($this->password);
+                try {
+                        if(move_uploaded_file($_FILES["avatar"]["tmp_name"], $this->avatar)){
+                                $conn = Db::getInstance();
+                                $statement = $conn->prepare("update user set avatar= :avatar, fullname = :fullname, username = :username, email = :email, password = :password, description = :description");
+                                $statement->bindParam(":avatar", $this->avatar);
+                                $statement->bindParam(":fullname", $this->fullname );
+                                $statement->bindParam(":username", $this->username);
+                                $statement->bindParam(":email", $this->email);
+                                $statement->bindParam(":desxription", $this->description);
+                                $statement->bindParam(":password", $password);
+
+                                $statement->execute();
+                            }
+                            else {
+                                $conn = Db::getInstance();
+                                $statement = $conn->prepare("update user set fullname = :fullname, username = :username, email = :email, password = :password, description = :description");
+                                $statement->bindParam(":fullname", $this->fullname );
+                                $statement->bindParam(":username", $this->username);
+                                $statement->bindParam(":email", $this->email);
+                                $statement->bindParam(":description", $this->description);
+                                $statement->bindParam(":password", $password);
+
+                                $statement->execute();
+                            }
+                } catch (\Throwable $th) {
+                        var_dump($th);
+                }
         }
 
         public static function findByEmail($email){
