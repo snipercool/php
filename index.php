@@ -4,6 +4,7 @@
     $post = new Post();
     $posts = $post->getPosts();
 
+    $get = $_SESSION['user'][0];
 
 
 ?><!DOCTYPE html>
@@ -16,6 +17,7 @@
     <title>Sockening</title>
 </head>
 <body>
+<a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
 <div class="feedContainer">
     <div class="feed">
         <?php 
