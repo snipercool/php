@@ -1,5 +1,5 @@
 <?php
-include_once("functions.inc.php");
+include_once("includes/functions.inc.php");
 // get user and password from POST
 if(!empty($_POST)){
     $username = $_POST['username'];
