@@ -16,6 +16,15 @@ if (isset($_POST['submit'])) {
             select id, Null as fullname, Null as username, tag from tag where tag LIKE '%".$search."%'");
             $stmt->execute();
 
+            while($row=$stmt->fetchAll()){
+                $FullName=$row[0]['fullname']; 
+                $UserName=$row[0]['username']; 
+                $ID=$row[0]['id'];
+                echo "<ul>\n"; 
+                echo "<li>" . "<a  href=\"user.php?username=$UserName\"><p>" .$UserName . "</p><p> " . $FullName .  "</p></a></li>\n"; 
+                echo "</ul>"; 
+                echo "<hr>";   
+            }
         
         } 
     }else {
