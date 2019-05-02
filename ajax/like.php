@@ -1,5 +1,6 @@
 <?php
     require_once '../bootstrap.php';
+    include_once '../classes/Like.class.php';
 
     if (!empty($_POST)) {
         $postId = $_POST['postId'];
