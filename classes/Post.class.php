@@ -91,11 +91,12 @@
         {
             if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $this->image)) {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare('insert into post (image, description) values (:image, :description)');
+                $statement = $conn->prepare('insert into post (image, description, user_id) values (:image, :description, :user_id)');
                 $statement->bindParam(':image', $this->image);
                 $statement->bindParam(':description', $this->description);
+                $statement->bindParam(':user_id', $_SESSION['user'][0]);
                 $statement->execute();
-                echo 'file '.$this->image.' has been uploaded with description '.$this->description;
+                echo 'file '.$this->image.' has been uploaded with description '.$this->description.'and user_id '.$_SESSION['user'][0];
             } else {
                 echo 'file has not been uploaded';
             }
@@ -121,11 +122,22 @@
             $statement->execute();
             $result = $statement->fetchAll();
             $temp = explode('.', $_FILES['fileToUpload']['name']);
-            $newfilename = count($result).'.'.$temp[1];
+            $newfilename = count($result) + 1 .'.'.$temp[1];
             $target_dir = 'images/uploads/';
             $target_file = $target_dir.$newfilename;
 
             return $target_file;
+        }
+
+        public function getPosts()
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('select * from post where user_id != :id LIMIT 20');
+            $statement->bindParam(':id', $_SESSION['user'][0]);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return $result;
         }
 
         public function getLikes()
