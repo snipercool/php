@@ -17,13 +17,22 @@ if (isset($_POST['submit'])) {
             $stmt->execute();
 
             while($row=$stmt->fetchAll(\PDO::FETCH_ASSOC)){
-                $FullName=$row[0]['fullname']; 
-                $UserName=$row[0]['username']; 
-                $ID=$row[0]['id'];
-                echo "<ul>\n"; 
-                echo "<li>" . "<a  href=\"user.php?username=$UserName\"><p>" .$UserName . "</p><p> " . $FullName .  "</p></a></li>\n"; 
-                echo "</ul>"; 
-                echo "<hr>";   
+                if ($row[0]['fullname'] != NULL) {
+                    $FullName=$row[0]['fullname']; 
+                    $UserName=$row[0]['username']; 
+                    $ID=$row[0]['id'];
+                    echo "<ul>\n"; 
+                    echo "<li>" . "<a  href=\"user.php?username=$UserName\"><p>" .$UserName . "</p><p> " . $FullName .  "</p></a></li>\n"; 
+                    echo "</ul>"; 
+                    echo "<hr>";
+                }elseif ($row[0]['tag'] != NULL) {
+                    $tag=$row[0]['tag'];
+                    $ID=$row[0]['id'];
+                    echo "<ul>\n"; 
+                    echo "<li>" . "<a  href=\"search.inc.php?tag=$tag\"><p>" .$tag . "</p></a></li>\n"; 
+                    echo "</ul>"; 
+                    echo "<hr>";
+               }   
             }
         
         } 
