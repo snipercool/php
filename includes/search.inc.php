@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
             select id, Null as fullname, Null as username, tag from tag where tag LIKE '%".$search."%'");
             $stmt->execute();
 
-            while($row=$stmt->fetchAll()){
+            while($row=$stmt->fetchAll(\PDO::FETCH_ASSOC)){
                 $FullName=$row[0]['fullname']; 
                 $UserName=$row[0]['username']; 
                 $ID=$row[0]['id'];
