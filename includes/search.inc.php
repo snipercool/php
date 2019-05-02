@@ -1,7 +1,7 @@
 <?php 
 require_once("../bootstrap.php");
 ?>
-<form action="search.inc.php?search" method="post" class="searchform">
+<form action="" method="post" class="searchform">
 <input type="search" name="search" class="searchform__input">
 <input type="submit" name="submit" value="Search">
 </form>
