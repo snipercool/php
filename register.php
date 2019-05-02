@@ -15,7 +15,7 @@
 			$data = $user->register();
 			if($data != false) {
 				$_SESSION['user'] = $data;
-				//header('location: index.php');
+				header('location: index.php');
 			}else{
 				$error = true;
 			}
