@@ -29,7 +29,7 @@
                     <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
                     <p class="post-username"><?php echo $u['username']; ?></p>
                 </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes(); ?></span> people like this </div>
+                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
             </div>
             <?php if ($i < 2) {
                     ++$i;
