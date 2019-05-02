@@ -28,7 +28,16 @@
         <div>
             <label for="fullname"><?php echo $result[0]['fullname'] ?></label><br>
         </div>
+        <div>
+            <label for="description"><?php echo $result[0]['description'] ?></label>
+        </div>
     </div>
-    <div></div>
+    <div class="postwall">
+        <?php foreach ($postresult as $post):?>
+        <div class="post">
+            <img src="<?php echo $post['image']?>" alt="post">
+        </div>
+        <?php endforeach; ?>
+    </div>
 </body>
 </html>
