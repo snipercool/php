@@ -54,6 +54,7 @@
                     <p class="post-description"> <?php echo $p['description']; ?></p>
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
+                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
             </div>
             <?php if ($i < 2) {
                     ++$i;
@@ -78,6 +79,9 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  
+<script language="JavaScript" type="text/javascript" src="js/check_like.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/check_inappropriate.js"></script>
 <script type="text/javascript">
     var $amount = 20
     var $userId = <?php echo $_SESSION['user'][0];?>;

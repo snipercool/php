@@ -1,6 +1,6 @@
 <?php
 
-        class Like
+        class Inappropriate
         {
             private $postId;
             private $userId;
@@ -45,45 +45,68 @@
                 return $this;
             }
 
-            private function addLike()
+            private function addInappropriate()
             {
-                $conn = db::getInstance();
-                $query = 'insert into likes (post_id, user_id) values (:post_id, :user_id)';
+                $conn = Db::getInstance();
+                $query = 'insert into inappropriate (post_id, user_id, report) values (:post_id, :user_id, 1)';
                 $statement = $conn->prepare($query);
                 $statement->bindValue(':post_id', $this->getPostId());
                 $statement->bindValue(':user_id', $this->getUserId());
                 $statement->execute();
             }
 
-            private function deleteLike()
+            private function deleteInappropriate()
             {
-                $conn = db::getInstance();
-                $query = 'DELETE FROM likes WHERE post_id = :post_id AND user_id =:user_id';
+                $conn = Db::getInstance();
+                $query = 'DELETE FROM inappropriate WHERE post_id = :post_id AND user_id =:user_id';
                 $statement = $conn->prepare($query);
                 $statement->bindValue(':post_id', $this->getPostId());
                 $statement->bindValue(':user_id', $this->getUserId());
                 $statement->execute();
             }
 
-            public function checkLike()
+            public function checkInappropriate()
             {
-                $conn = db::getInstance();
-                $query = 'SELECT COUNT(*) FROM likes WHERE post_id=:post_id AND user_id=:user_id';
+                $conn = Db::getInstance();
+                $query = 'SELECT COUNT(*) FROM inappropriate WHERE post_id=:post_id AND user_id=:user_id';
                 $statement = $conn->prepare($query);
                 $statement->bindValue(':post_id', $this->getPostId());
                 $statement->bindValue(':user_id', $this->getUserId());
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 if ($result[0]['COUNT(*)'] == 0) {
-                    $this->addLike();
+                    $this->addInappropriate();
 
-                    return 'liked';
+                    return 'flagged';
                 } else {
-                    $this->deleteLike();
+                    $this->deleteInappropriate();
 
-                    return 'unliked';
+                    return 'unflagged';
                 }
 
                 return $result;
+            }
+
+            public function isPostInappropriate()
+            {
+                $conn = Db::getInstance();
+                $query = 'SELECT COUNT(*) as amount FROM inappropriate WHERE post_id = :post_id';
+                $statement = $conn->prepare($query);
+                $statement->bindValue(':post_id', $this->getPostId());
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+                if ((int) $result['amount'] == 3) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+                /* this function checks if a post has three votes against it */
+                // select count inappropriates voor huidige post id
+                // indien 3 of meer
+                //  return true
+                // else
+                //  return false
             }
         }

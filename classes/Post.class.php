@@ -91,7 +91,7 @@
         {
             if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $this->image)) {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare('insert into post (image, description, user_id) values (:image, :description, :user_id)');
+                $statement = $conn->prepare('insert into post (image, description, user_id, active) values (:image, :description, :user_id, 1)');
                 $statement->bindParam(':image', $this->image);
                 $statement->bindParam(':description', $this->description);
                 $statement->bindParam(':user_id', $_SESSION['user'][0]);
@@ -144,7 +144,8 @@
 
         public function countPosts(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select count(*) as amount from post");
+            $statement = $conn->prepare('select * from post where user_id != :id and active = 1 LIMIT 20');
+            $statement->bindParam(':id', $_SESSION['user'][0]);
             $statement->execute();
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $result[0]['amount'];
@@ -195,5 +196,25 @@
             $result = $statement->fetch(PDO::FETCH_ASSOC);
 
             return $result['count'];
+        }
+
+        public function getReports($id)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('select count(*) as count from inappropriate where post_id = :postid');
+            $statement->bindValue(':postid', $id);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return $result['count'];
+        }
+
+        public static function deactivate($postId)
+        {
+            $conn = Db::getInstance();
+            $query = 'UPDATE post SET active = 0 WHERE id = :id';
+            $statement = $conn->prepare($query);
+            $statement->bindValue(':id', $postId);
+            $statement->execute();
         }
     }
