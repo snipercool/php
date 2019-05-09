@@ -10,8 +10,6 @@
     $post = new Post();
     
 
-
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,8 +53,13 @@
                     <p class="post-timestamp"><?php echo $time ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
                 </div>
+                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
             </div>
-            <?php if($i < 2){$i++;}else{$i = 0;}; ?>
+            <?php if ($i < 2) {
+                    ++$i;
+                } else {
+                    $i = 0;
+                } ?>
         <?php endforeach; ?>
 
     </div>

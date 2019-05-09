@@ -45,6 +45,7 @@
 					<div class="form__error">
 						<p>
 							<?php echo "Something went wrong!"; ?>
+							
 						</p>
 					</div>
         <?php endif; ?>
