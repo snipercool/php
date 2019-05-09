@@ -6,6 +6,7 @@
 
     $get = $_SESSION['user'][0];
 
+    
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,7 @@
                 ?>
                 <div class="post-user">
                     <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
-                    <p class="post-username"><?php echo $u['username'] ?></p>
+                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username'] ?></a>
                 </div>
             </div>
             <?php if($i < 2){$i++;}else{$i = 0;}; ?>
