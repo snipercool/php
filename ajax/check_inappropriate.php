@@ -9,9 +9,15 @@
         $i->setPostId($postId);
         $i->setUserId($userId);
         $flag = $i->checkInappropriate();
-        $i->checkInappropriatePost();
 
+        echo $flag;
         if ($flag == 'flagged') {
+            // check if post should be removed
+            if ($i->isPostInappropriate()) {
+                // yes, 3 votes found, we should remove this post
+                Post::deactivate($postId);
+            }
+
             $result = [
                 'status' => 'flagged',
                 'message' => 'report was saved',

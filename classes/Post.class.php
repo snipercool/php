@@ -91,7 +91,7 @@
         {
             if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $this->image)) {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare('insert into post (image, description, user_id) values (:image, :description, :user_id)');
+                $statement = $conn->prepare('insert into post (image, description, user_id, active) values (:image, :description, :user_id, 1)');
                 $statement->bindParam(':image', $this->image);
                 $statement->bindParam(':description', $this->description);
                 $statement->bindParam(':user_id', $_SESSION['user'][0]);
@@ -132,7 +132,7 @@
         public function getPosts()
         {
             $conn = Db::getInstance();
-            $statement = $conn->prepare('select * from post where user_id != :id LIMIT 20');
+            $statement = $conn->prepare('select * from post where user_id != :id and active = 1 LIMIT 20');
             $statement->bindParam(':id', $_SESSION['user'][0]);
             $statement->execute();
             $result = $statement->fetchAll();
@@ -162,27 +162,12 @@
             return $result['count'];
         }
 
-        private function deletePost()
-        {
-            $conn = db::getInstance();
-            $query = 'DELETE FROM post WHERE post_id = :post_id AND user_id =:user_id';
-            $statement = $conn->prepare($query);
-            $statement->bindValue(':post_id', $this->getPostId());
-            $statement->bindValue(':user_id', $this->getUserId());
-            $statement->execute();
-        }
-
-        public function checkInappropriatePost()
+        public static function deactivate($postId)
         {
             $conn = Db::getInstance();
-            $statement = $conn->prepare('select * from inappropriate where post_id = :postid');
-            $statement->bindParam(':id', $_SESSION['user'][0]);
+            $query = 'UPDATE post SET active = 0 WHERE id = :id';
+            $statement = $conn->prepare($query);
+            $statement->bindValue(':id', $postId);
             $statement->execute();
-            $result = $statement->fetchAll();
-
-            return $result;
-            if ($result == 3) {
-                $this->deletePost();
-            }
         }
     }

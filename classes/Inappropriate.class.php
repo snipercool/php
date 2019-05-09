@@ -47,7 +47,7 @@
 
             private function addInappropriate()
             {
-                $conn = db::getInstance();
+                $conn = Db::getInstance();
                 $query = 'insert into inappropriate (post_id, user_id, report) values (:post_id, :user_id, 1)';
                 $statement = $conn->prepare($query);
                 $statement->bindValue(':post_id', $this->getPostId());
@@ -57,7 +57,7 @@
 
             private function deleteInappropriate()
             {
-                $conn = db::getInstance();
+                $conn = Db::getInstance();
                 $query = 'DELETE FROM inappropriate WHERE post_id = :post_id AND user_id =:user_id';
                 $statement = $conn->prepare($query);
                 $statement->bindValue(':post_id', $this->getPostId());
@@ -67,7 +67,7 @@
 
             public function checkInappropriate()
             {
-                $conn = db::getInstance();
+                $conn = Db::getInstance();
                 $query = 'SELECT COUNT(*) FROM inappropriate WHERE post_id=:post_id AND user_id=:user_id';
                 $statement = $conn->prepare($query);
                 $statement->bindValue(':post_id', $this->getPostId());
@@ -85,5 +85,28 @@
                 }
 
                 return $result;
+            }
+
+            public function isPostInappropriate()
+            {
+                $conn = Db::getInstance();
+                $query = 'SELECT COUNT(*) as amount FROM inappropriate WHERE post_id = :post_id';
+                $statement = $conn->prepare($query);
+                $statement->bindValue(':post_id', $this->getPostId());
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+                if ((int) $result['amount'] == 3) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+                /* this function checks if a post has three votes against it */
+                // select count inappropriates voor huidige post id
+                // indien 3 of meer
+                //  return true
+                // else
+                //  return false
             }
         }
