@@ -118,13 +118,61 @@
             return $target_file;
         }
 
-        public function getPosts(){
+        public function getPosts($amount){
+            try{
+                $conn = Db::getInstance();
+                $statement = $conn->prepare("select * from post ORDER BY timestamp DESC LIMIT :limit");
+                $statement->bindValue(':limit', $amount, PDO::PARAM_INT);
+                $statement->execute();
+                $result = $statement->fetchAll();
+                return $result;
+            }catch( Throwable $t){
+                echo $t;
+            }
+        }
+
+        public function countPosts(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select * from post where user_id != :id LIMIT 20");
-            $statement->bindParam(':id', $_SESSION['user'][0]);
+            $statement = $conn->prepare("select count(*) as amount from post");
             $statement->execute();
-            $result = $statement->fetchAll();
-            return $result;
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result[0]['amount'];
+        }
+
+        public function getHumanTime($timestamp){
+            date_default_timezone_set("Europe/Brussels");
+
+            $now = time();
+            $time = strtotime($timestamp);
+            
+            $today = date("d", $now);
+            $month = date("m", $now);
+            $year = date("Y", $now);
+            $postDay = date("d", $time);
+            $postMonth = date("m", $time);
+            $postYear = date("Y", $time);
+
+
+
+            if($today - $postDay == 1 && $month == $postMonth && $year == $postYear){
+                return "yesterday at " . date("H:i", $time);
+            }else if($year == $postYear){
+                return date("d M", $time) . " at " . date("H:i");
+            }else if($year != $postYear){
+                return date("d M Y", $time);
+            }else if(($now - $time) >= 3600){
+                if(($now - $time) < 7200 ){
+                    return "1 hour ago";
+                }else{
+                    return ceil(($now - $time)/3600) . "hours ago";
+                }
+            }else if (($now - $time) < 3600 ){
+                if(($now-$time < 300)){
+                    return "just now";
+                }else{
+                    return ceil(($now - $time)/60) . " minutes ago";
+                }
+            }
         }
 
     }
