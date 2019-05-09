@@ -39,7 +39,7 @@ body{
 /** UPLOAD FORM **/
 
 #formContainer{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
@@ -114,31 +114,64 @@ body{
 
 .post{
     display: inline-block;
-    width: 90%;
-    margin: 5%;
+    max-width: 80%;
+    max-height: 80%;
+    margin: 2%;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px 10px 0px 0px;
-    
 }
 
 .post-image{
     display: inline-block;
     margin: 2% auto;
-    max-width: 300px;
-    max-height: 300px;
+    width: 80%;
+    height: 40%;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .post-avatar{
     display: inline-block;
-    width: 20%;
+    grid-column: 1/ span 1;
+    grid-row: 1/ span 2;
     padding: 2%;
+}
+
+.post-user{
+    display: grid;
+    grid-template-columns: 50px 250px 50px 50px;
+    grid-template-rows: 1fr 1fr 1fr; 
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 70px;
+    padding-left: 2%;
 }
 
 .post-username{
     display: inline-block;
+    grid-column: 2/ span 1;
+    grid-row: 1/ span 1;
     text-align: left;
-    padding: 2%;
-    width: 70%;
+    padding: 1%;
+    padding-bottom: 0;
+}
+
+.post-timestamp{
+    display: inline-block;
+    grid-column: 2/ span 1;
+    grid-row: 2/ span 1;
+    text-align: left;
+    font-size: 70%;
+    padding: 0.5%;
+}
+
+.post-description{
+    display: inline-block;
+    grid-column: 1/ 4;
+    grid-row: 3/ span 1;
+    padding: 0.5%;
+    overflow: hidden;
 }
 
 .post0{
@@ -154,8 +187,49 @@ body{
     background-color: #EA563C;
 }
 
-.post-user{
-    background-color: rgba(255, 255, 255, 0.5);
-    padding-top: 2%;
-    padding-bottom: 5%; 
+.loadmore{
+    margin-bottom: 10%;
+    cursor: pointer;
+}
+
+/* MODAL/LIGHTBOX */
+
+#modal{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 999;
+}
+
+.modal-content{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    text-align: center;
+    
+}
+
+.modal-content p{
+    text-align: left;
+}
+
+#modalTimestamp{
+    font-size: 70%;
+}
+
+#modalImage{
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+.close{
+    color: white;
+    font-weight: bold;
+    font-size: 200%;
+    cursor: pointer;
 }
