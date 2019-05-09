@@ -150,4 +150,39 @@
 
             return $result['count'];
         }
+
+        public function getReports($id)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('select count(*) as count from inappropriate where post_id = :postid');
+            $statement->bindValue(':postid', $id);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return $result['count'];
+        }
+
+        private function deletePost()
+        {
+            $conn = db::getInstance();
+            $query = 'DELETE FROM post WHERE post_id = :post_id AND user_id =:user_id';
+            $statement = $conn->prepare($query);
+            $statement->bindValue(':post_id', $this->getPostId());
+            $statement->bindValue(':user_id', $this->getUserId());
+            $statement->execute();
+        }
+
+        public function checkInappropriatePost()
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('select * from inappropriate where post_id = :postid');
+            $statement->bindParam(':id', $_SESSION['user'][0]);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return $result;
+            if ($result == 3) {
+                $this->deletePost();
+            }
+        }
     }

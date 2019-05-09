@@ -30,6 +30,7 @@
                     <p class="post-username"><?php echo $u['username']; ?></p>
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
+                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
             </div>
             <?php if ($i < 2) {
                     ++$i;
@@ -47,5 +48,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script language="JavaScript" type="text/javascript" src="js/check_like.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/check_inappropriate.js"></script>
+
 </body>
 </html>
