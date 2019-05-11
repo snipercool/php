@@ -4,6 +4,10 @@
     $post = new Post();
     $posts = $post->getPosts();
 
+    $get = $_SESSION['user'][0];
+
+    
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +18,7 @@
     <title>Sockening</title>
 </head>
 <body>
+<a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
 <div class="feedContainer">
     <div class="feed">
         <?php
@@ -26,8 +31,8 @@
                     $u = $user->getUserById($p['user_id']);
                 ?>
                 <div class="post-user">
-                    <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
-                    <p class="post-username"><?php echo $u['username']; ?></p>
+                    <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
+                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username'] ?></a>
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
             </div>

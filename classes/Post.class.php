@@ -139,6 +139,14 @@
 
             return $result;
         }
+        public function getUserPosts(){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from post where user_id = :id");
+            $statement->bindParam(':id', $_GET['id']);
+            $statement->execute();
+            $resultpost = $statement->fetchAll();
+            return $resultpost;
+        }
 
         public function getLikes($id)
         {
