@@ -1,7 +1,7 @@
 <?php 
 require_once("../bootstrap.php");
 ?>
-<form action="" method="post" class="searchform">
+<form action="search.inc.php?search" method="post" class="searchform">
 <input type="search" name="search" class="searchform__input">
 <input type="submit" name="submit" value="Search">
 </form>
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
                     $UserName=$row[0]['username']; 
                     $ID=$row[0]['id'];
                     echo "<ul>\n"; 
-                    echo "<li>" . "<a  href=\"user.php?username=$ID\"><p>" .$UserName . "</p><p> " . $FullName .  "</p></a></li>\n"; 
+                    echo "<li>" . "<a  href=\"user.php?id=$ID\"><p>" .$UserName . "</p><p> " . $FullName .  "</p></a></li>\n"; 
                     echo "</ul>"; 
                     echo "<hr>";
                 }elseif ($row[0]['tag'] != NULL) {
@@ -33,13 +33,14 @@ if (isset($_POST['submit'])) {
                     echo "</ul>"; 
                     echo "<hr>";
                }   
+               var_dump($row);
             }
-        
         } 
     }else {
         echo "<p>Nothing Found</p>";
 
     }
+    
 }    
         
 ?>

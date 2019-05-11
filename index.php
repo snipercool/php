@@ -10,6 +10,10 @@
     $post = new Post();
     
 
+    $get = $_SESSION['user'][0];
+
+    
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,10 +25,14 @@
     <title>Sockening</title>
 </head>
 <body>
+<<<<<<< HEAD
+<a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
+=======
 <?php 
     require_once('includes/upload.inc.php');
     require_once('includes/nav.inc.php');
 ?>
+>>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
 <div class="feedContainer">
     <div class="feed" id="feed">
         <?php
@@ -49,9 +57,13 @@
                 ?>
                 <div class="post-user">
                     <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
+<<<<<<< HEAD
+                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username'] ?></a>
+=======
                     <p class="post-username"><?php echo $u['username']; ?></p>
                     <p class="post-timestamp"><?php echo $time ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
+>>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
