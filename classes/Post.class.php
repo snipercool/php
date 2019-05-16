@@ -112,11 +112,7 @@
         {
             if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $this->image)) {
                 $conn = Db::getInstance();
-<<<<<<< HEAD
-                $statement = $conn->prepare('insert into post (image, description, user_id, filter) values (:image, :description, :user_id, :filter)');
-=======
-                $statement = $conn->prepare('insert into post (image, description, user_id, active) values (:image, :description, :user_id, 1)');
->>>>>>> 7c3b9eb0912aecf862ac82ca533325c6e471c373
+                $statement = $conn->prepare('insert into post (image, description, user_id, filter, active) values (:image, :description, :user_id, :filter, 1)');
                 $statement->bindParam(':image', $this->image);
                 $statement->bindParam(':description', $this->description);
                 $statement->bindParam(':user_id', $_SESSION['user'][0]);
@@ -233,9 +229,6 @@
             return $result['count'];
         }
 
-<<<<<<< HEAD
-        
-=======
         public function getReports($id)
         {
             $conn = Db::getInstance();
@@ -255,5 +248,4 @@
             $statement->bindValue(':id', $postId);
             $statement->execute();
         }
->>>>>>> 7c3b9eb0912aecf862ac82ca533325c6e471c373
     }
