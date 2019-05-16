@@ -39,7 +39,7 @@
         $i = 0;
         foreach($posts as $p): ?>
             <div class="post post<?php echo $i ?>">
-                <img src='<?php echo $p['image']?>' alt="post image" class="post-image">
+                <img src='<?php echo $p['image']?>' alt="post image" class="post-image <?php echo $p['filter']; ?>">
                 <?php 
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);

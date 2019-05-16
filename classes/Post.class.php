@@ -4,6 +4,7 @@
         private $image;
         private $description;
         private $timestamp;
+        private $filter;
 
         /**
          * Get the value of description.
@@ -65,6 +66,26 @@
             return $this;
         }
 
+        /**
+         * Get the value of filter
+         */ 
+        public function getFilter()
+        {
+                return $this->filter;
+        }
+
+        /**
+         * Set the value of filter
+         *
+         * @return  self
+         */ 
+        public function setFilter($filter)
+        {
+                $this->filter = $filter;
+
+                return $this;
+        }
+
         public function checkImage($image)
         {
             // Check if image file is a actual image or fake image
@@ -91,10 +112,11 @@
         {
             if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $this->image)) {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare('insert into post (image, description, user_id) values (:image, :description, :user_id)');
+                $statement = $conn->prepare('insert into post (image, description, user_id, filter) values (:image, :description, :user_id, :filter)');
                 $statement->bindParam(':image', $this->image);
                 $statement->bindParam(':description', $this->description);
                 $statement->bindParam(':user_id', $_SESSION['user'][0]);
+                $statement->bindParam(':filter', $this->filter);
                 $statement->execute();
                 echo 'file '.$this->image.' has been uploaded with description '.$this->description.'and user_id '.$_SESSION['user'][0];
             } else {
@@ -132,8 +154,9 @@
         public function getPosts($amount){
             try{
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("select * from post ORDER BY timestamp DESC LIMIT :limit");
+                $statement = $conn->prepare("select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC LIMIT :limit ");
                 $statement->bindValue(':limit', $amount, PDO::PARAM_INT);
+                $statement->bindValue(':user_id', $_SESSION['user'][0]);
                 $statement->execute();
                 $result = $statement->fetchAll();
                 return $result;
@@ -196,4 +219,6 @@
 
             return $result['count'];
         }
+
+        
     }
