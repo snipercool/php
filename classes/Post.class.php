@@ -67,23 +67,23 @@
         }
 
         /**
-         * Get the value of filter
-         */ 
+         * Get the value of filter.
+         */
         public function getFilter()
         {
-                return $this->filter;
+            return $this->filter;
         }
 
         /**
-         * Set the value of filter
+         * Set the value of filter.
          *
-         * @return  self
-         */ 
+         * @return self
+         */
         public function setFilter($filter)
         {
-                $this->filter = $filter;
+            $this->filter = $filter;
 
-                return $this;
+            return $this;
         }
 
         public function checkImage($image)
@@ -151,70 +151,76 @@
             return $target_file;
         }
 
-        public function getPosts($amount){
-            try{
+        public function getPosts($amount)
+        {
+            try {
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC LIMIT :limit ");
+                $statement = $conn->prepare('select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC LIMIT :limit ');
                 $statement->bindValue(':limit', $amount, PDO::PARAM_INT);
                 $statement->bindValue(':user_id', $_SESSION['user'][0]);
                 $statement->execute();
                 $result = $statement->fetchAll();
+
                 return $result;
-            }catch( Throwable $t){
+            } catch (Throwable $t) {
                 echo $t;
             }
         }
 
-        public function countPosts(){
+        public function countPosts()
+        {
             $conn = Db::getInstance();
             $statement = $conn->prepare('select * from post where user_id != :id and active = 1 LIMIT 20');
             $statement->bindParam(':id', $_SESSION['user'][0]);
             $statement->execute();
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
             return $result[0]['amount'];
         }
 
-        public function getHumanTime($timestamp){
-            date_default_timezone_set("Europe/Brussels");
+        public function getHumanTime($timestamp)
+        {
+            date_default_timezone_set('Europe/Brussels');
 
             $now = time();
             $time = strtotime($timestamp);
-            
-            $today = date("d", $now);
-            $month = date("m", $now);
-            $year = date("Y", $now);
-            $postDay = date("d", $time);
-            $postMonth = date("m", $time);
-            $postYear = date("Y", $time);
 
+            $today = date('d', $now);
+            $month = date('m', $now);
+            $year = date('Y', $now);
+            $postDay = date('d', $time);
+            $postMonth = date('m', $time);
+            $postYear = date('Y', $time);
 
-
-            if($today - $postDay == 1 && $month == $postMonth && $year == $postYear){
-                return "yesterday at " . date("H:i", $time);
-            }else if($year == $postYear){
-                return date("d M", $time) . " at " . date("H:i");
-            }else if($year != $postYear){
-                return date("d M Y", $time);
-            }else if(($now - $time) >= 3600){
-                if(($now - $time) < 7200 ){
-                    return "1 hour ago";
-                }else{
-                    return ceil(($now - $time)/3600) . "hours ago";
+            if ($today - $postDay == 1 && $month == $postMonth && $year == $postYear) {
+                return 'yesterday at '.date('H:i', $time);
+            } elseif ($year == $postYear) {
+                return date('d M', $time).' at '.date('H:i');
+            } elseif ($year != $postYear) {
+                return date('d M Y', $time);
+            } elseif (($now - $time) >= 3600) {
+                if (($now - $time) < 7200) {
+                    return '1 hour ago';
+                } else {
+                    return ceil(($now - $time) / 3600).'hours ago';
                 }
-            }else if (($now - $time) < 3600 ){
-                if(($now-$time < 300)){
-                    return "just now";
-                }else{
-                    return ceil(($now - $time)/60) . " minutes ago";
+            } elseif (($now - $time) < 3600) {
+                if (($now - $time < 300)) {
+                    return 'just now';
+                } else {
+                    return ceil(($now - $time) / 60).' minutes ago';
                 }
             }
         }
-        public function getUserPosts(){
+
+        public function getUserPosts()
+        {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select * from post where user_id = :id");
+            $statement = $conn->prepare('select * from post where user_id = :id');
             $statement->bindParam(':id', $_GET['id']);
             $statement->execute();
             $resultpost = $statement->fetchAll();
+
             return $resultpost;
         }
 
@@ -247,5 +253,29 @@
             $statement = $conn->prepare($query);
             $statement->bindValue(':id', $postId);
             $statement->execute();
+        }
+
+        public function setCity()
+        {
+            $curl = curl_init('https://eu1.locationiq.com/v1/reverse.php?key=fb4c4b4d98b007&lat='.$_SESSION['lat'].'&lon='.$_SESSION['long'].'&format=json');
+
+            curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            if ($err) {
+                echo 'cURL Error #:'.$err;
+            } else {
+                $json = json_decode($response);
+            }
+            $this->city = $json->address->city_district;
+            console.log($this->city);
         }
     }

@@ -1,18 +1,15 @@
-<?php 
-    require_once('bootstrap.php');
-    
-	if($_SESSION['user'][0] == null){
-		header('location: login.php');
-	}else{
+<?php
+    require_once 'bootstrap.php';
+
+    if ($_SESSION['user'][0] == null) {
+        header('location: login.php');
+    } else {
         var_dump($_SESSION['user']);
     }
 
     $post = new Post();
-    
 
     $get = $_SESSION['user'][0];
-
-    
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -25,30 +22,26 @@
     <title>Sockening</title>
 </head>
 <body>
-<<<<<<< HEAD
-<a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
-=======
-<?php 
-    require_once('includes/upload.inc.php');
-    require_once('includes/nav.inc.php');
+<?php
+    require_once 'includes/upload.inc.php';
+    require_once 'includes/nav.inc.php';
 ?>
->>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
 <div class="feedContainer">
     <div class="feed" id="feed">
         <?php
-            if(isset($_POST['amount'])){
+            if (isset($_POST['amount'])) {
                 $posts = $post->getPosts((int) $_POST['amount']);
-            }else{
+            } else {
                 $posts = $post->getPosts(20);
             }
         ?>
 
-        <?php 
+        <?php
         $i = 0;
-        foreach($posts as $p): ?>
-            <div class="post post<?php echo $i ?>">
-                <img src='<?php echo $p['image']?>' alt="post image" class="post-image <?php echo $p['filter']; ?>">
-                <?php 
+        foreach ($posts as $p): ?>
+            <div class="post post<?php echo $i; ?>">
+                <img src='<?php echo $p['image']; ?>' alt="post image" class="post-image <?php echo $p['filter']; ?>">
+                <?php
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);
 
@@ -56,14 +49,10 @@
                     $time = $post->getHumanTime($p['timestamp']);
                 ?>
                 <div class="post-user">
-                    <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
-<<<<<<< HEAD
-                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username'] ?></a>
-=======
+                    <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
                     <p class="post-username"><?php echo $u['username']; ?></p>
-                    <p class="post-timestamp"><?php echo $time ?></p>
+                    <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
->>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
@@ -93,10 +82,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   
 <script language="JavaScript" type="text/javascript" src="js/check_like.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/get_location.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/check_inappropriate.js"></script>
 <script type="text/javascript">
     var $amount = 20
-    var $userId = <?php echo $_SESSION['user'][0];?>;
+    var $userId = <?php echo $_SESSION['user'][0]; ?>;
 
     $("#loadmore").on("click", function(e){
         $amount += 20;
@@ -105,11 +95,11 @@
         {amount: $amount}, function(){})
         e.preventDefault();
 
-        <?php 
+        <?php
         $totalAmount = $post->countPosts();
         ?>
 
-        if(<?php echo $totalAmount ?> <= $amount){
+        if(<?php echo $totalAmount; ?> <= $amount){
             $('#loadmore').hide();
         }
     });
