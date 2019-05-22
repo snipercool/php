@@ -1,10 +1,11 @@
 <?php 
     require_once('bootstrap.php');
     
+    
 	if($_SESSION['user'][0] == null){
 		header('location: login.php');
 	}else{
-        var_dump($_SESSION['user']);
+        //var_dump($_SESSION['user']);
     }
 
     $post = new Post();
@@ -21,18 +22,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
-    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="dist/css/app.css">
     <title>Sockening</title>
 </head>
 <body>
-<<<<<<< HEAD
-<a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
-=======
 <?php 
     require_once('includes/upload.inc.php');
+    require_once('includes/nav_mobile.inc.php');
     require_once('includes/nav.inc.php');
+    
+   
 ?>
->>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
+<a class="logo" href="index.php"><img class="logo__images" src="images/Logo.svg" alt="Logo"></a>
 <div class="feedContainer">
     <div class="feed" id="feed">
         <?php
@@ -47,7 +48,7 @@
         $i = 0;
         foreach($posts as $p): ?>
             <div class="post post<?php echo $i ?>">
-                <img src='<?php echo $p['image']?>' alt="post image" class="post-image">
+                <a href=""><img src='<?php echo $p['image']?>' alt="post image" class="post-image"></a>
                 <?php 
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);
@@ -57,16 +58,12 @@
                 ?>
                 <div class="post-user">
                     <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
-<<<<<<< HEAD
-                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username'] ?></a>
-=======
-                    <p class="post-username"><?php echo $u['username']; ?></p>
+                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username']; ?></a>
                     <p class="post-timestamp"><?php echo $time ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
->>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
                 </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
+                <div class="likes"><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
+                <div class="report"><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
             </div>
             <?php if ($i < 2) {
                     ++$i;

@@ -25,7 +25,7 @@ if(!empty($_POST)){
 <head>
   <meta charset="UTF-8">
   <title>TheSockening</title>
-  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="dist/css/app.css">
 </head>
 <body>
 	<div class="Login">

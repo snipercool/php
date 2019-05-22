@@ -32,7 +32,7 @@
 <head>
   <meta charset="UTF-8">
   <title>The Sockening</title>
-  <link rel="stylesheet" href="css/cesar.css">
+  <link rel="stylesheet" href="dist/css/app.css">
 </head>
 <body>
 	<div class="instaLogin instaLogin--register">

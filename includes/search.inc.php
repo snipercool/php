@@ -1,9 +1,6 @@
-<?php 
-require_once("../bootstrap.php");
-?>
-<form action="search.inc.php?search" method="post" class="searchform">
-<input type="search" name="search" class="searchform__input">
+<form name="postsearch" action="?search" method="post" class="searchform">
 <input type="submit" name="submit" value="Search">
+<input type="search" name="search" class="searchform__input">
 </form>
 <?php
 if (isset($_POST['submit'])) {
@@ -33,7 +30,7 @@ if (isset($_POST['submit'])) {
                     echo "</ul>"; 
                     echo "<hr>";
                }   
-               var_dump($row);
+               
             }
         } 
     }else {
