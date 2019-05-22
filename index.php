@@ -54,7 +54,7 @@
                 <div class="post-user">
                     <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
                     <p class="post-username"><?php echo $u['username']; ?></p>
-                    <p class="post-location"> <?php echo $p['city']; ?></p>
+                    <!--<p class="post-location"> <?php echo $p['city']; ?></p>-->
                     <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
                     
