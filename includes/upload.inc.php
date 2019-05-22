@@ -35,11 +35,8 @@
         <input type="file" name="fileToUpload" id="fileToUpload" onchange="loadFile(event)">
         <textarea name="description" id="description" placeholder="Write about your picture"></textarea>
         <input type="text" id="filterField" name="filter" class="hidden">
-<<<<<<< HEAD
         <input type="text" id="hashtagField" name="hashtags">
-=======
         <input type="text" id="location" name="location" class="hidden">
->>>>>>> 0136601eb44fc87edeabb98ea0671938804ea082
         <button type="submit" value="Upload Image" name="submit" id="btnSubmit" class="btn">Submit</button>
     </form>
     

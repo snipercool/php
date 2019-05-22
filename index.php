@@ -1,19 +1,9 @@
-<<<<<<< HEAD
 <?php 
     require_once('bootstrap.php');
     
 	if($_SESSION['user'][0] == null){
 		header('location: login.php');
 	}else{
-=======
-<?php
-    require_once 'bootstrap.php';
-
-    if ($_SESSION['user'][0] == null) {
-        header('location: login.php');
-    } else {
-        var_dump($_SESSION['user']);
->>>>>>> 0136601eb44fc87edeabb98ea0671938804ea082
     }
 
     $post = new Post();
@@ -31,16 +21,10 @@
     <title>Sockening</title>
 </head>
 <body>
-<<<<<<< HEAD
 <a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
 <?php 
     require_once('includes/upload.inc.php');
     require_once('includes/nav.inc.php');
-=======
-<?php
-    require_once 'includes/upload.inc.php';
-    require_once 'includes/nav.inc.php';
->>>>>>> 0136601eb44fc87edeabb98ea0671938804ea082
 ?>
 <div class="feedContainer">
     <div class="feed" id="feed">
@@ -54,17 +38,10 @@
 
         <?php
         $i = 0;
-<<<<<<< HEAD
         foreach($posts as $p): ?>
             <div class="post post<?php echo $i ?>" data-id="<?php echo $p['id'] ?>">
                 <img src='<?php echo $p['image']?>' alt="post image" class="post-image <?php echo $p['filter']; ?>"  onClick=openModal(<?php echo $p['id']?>)>
                 <?php 
-=======
-        foreach ($posts as $p): ?>
-            <div class="post post<?php echo $i; ?>">
-                <img src='<?php echo $p['image']; ?>' alt="post image" class="post-image <?php echo $p['filter']; ?>">
-                <?php
->>>>>>> 0136601eb44fc87edeabb98ea0671938804ea082
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);
 
@@ -72,11 +49,7 @@
                     $time = $post->getHumanTime($p['timestamp']);
                 ?>
                 <div class="post-user">
-<<<<<<< HEAD
-                    <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
-=======
                     <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
->>>>>>> 0136601eb44fc87edeabb98ea0671938804ea082
                     <p class="post-username"><?php echo $u['username']; ?></p>
                     <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
