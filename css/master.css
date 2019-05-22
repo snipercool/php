@@ -95,7 +95,7 @@ body{
     display: block;
     margin: 1% auto;
     max-width: 80%;
-    max-height: 80%;
+    max-height: 40vh;
 }
 
 .filter{
@@ -196,8 +196,8 @@ body{
 
 .post-description{
     display: inline-block;
-    grid-column: 1/ 4;
-    grid-row: 3/ span 1;
+    grid-column: 1/ span 4;
+    grid-row: 3;
     padding: 0.5%;
     overflow: hidden;
 }

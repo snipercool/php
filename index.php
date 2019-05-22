@@ -4,15 +4,11 @@
 	if($_SESSION['user'][0] == null){
 		header('location: login.php');
 	}else{
-        var_dump($_SESSION['user']);
     }
 
     $post = new Post();
-    
 
     $get = $_SESSION['user'][0];
-
-    
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -25,29 +21,26 @@
     <title>Sockening</title>
 </head>
 <body>
-<<<<<<< HEAD
 <a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
-=======
 <?php 
     require_once('includes/upload.inc.php');
     require_once('includes/nav.inc.php');
 ?>
->>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
 <div class="feedContainer">
     <div class="feed" id="feed">
         <?php
-            if(isset($_POST['amount'])){
+            if (isset($_POST['amount'])) {
                 $posts = $post->getPosts((int) $_POST['amount']);
-            }else{
+            } else {
                 $posts = $post->getPosts(20);
             }
         ?>
 
-        <?php 
+        <?php
         $i = 0;
         foreach($posts as $p): ?>
-            <div class="post post<?php echo $i ?>">
-                <img src='<?php echo $p['image']?>' alt="post image" class="post-image <?php echo $p['filter']; ?>">
+            <div class="post post<?php echo $i ?>" data-id="<?php echo $p['id'] ?>">
+                <img src='<?php echo $p['image']?>' alt="post image" class="post-image <?php echo $p['filter']; ?>"  onClick=openModal(<?php echo $p['id']?>)>
                 <?php 
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);
@@ -56,14 +49,10 @@
                     $time = $post->getHumanTime($p['timestamp']);
                 ?>
                 <div class="post-user">
-                    <img src="<?php echo $u['avatar'] ?>" alt="avatar" class="post-avatar">
-<<<<<<< HEAD
-                    <a href="user.php?id=<?php echo $p['user_id'] ?>" class="post-username"><?php echo $u['username'] ?></a>
-=======
+                    <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
                     <p class="post-username"><?php echo $u['username']; ?></p>
-                    <p class="post-timestamp"><?php echo $time ?></p>
+                    <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
->>>>>>> a3a70665ee42ab05873ec9a720fe2bff06867657
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
@@ -81,7 +70,7 @@
 
 <div id="modal" class="hidden">
     <span class="close cursor" onclick="closeModal()">&times;</span>
-    <div class="modal-content">
+    <div class="modal-content post">
         <img src="#" alt="modalImage" id="modalImage">
         <p id="modalUsername"></p>
         <p id="modalTimestamp"></p>
@@ -93,35 +82,58 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   
 <script language="JavaScript" type="text/javascript" src="js/check_like.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/get_location.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/check_inappropriate.js"></script>
 <script type="text/javascript">
     var $amount = 20
-    var $userId = <?php echo $_SESSION['user'][0];?>;
+    var $userId = <?php echo $_SESSION['user'][0]; ?>;
+
+    $('.feed').load("index.php .feed", {amount: $amount},function(){
+        var descriptions = document.querySelectorAll('.post-description');
+        for(var i = 0; i < descriptions.length; i++){
+            var repl = descriptions[i].innerHTML.replace(/#(\w+)/g, '<a href="hashtag.php?hashtag=$1">#$1</a>');
+            descriptions[i].innerHTML = repl;
+        };
+
+    })
+
 
     $("#loadmore").on("click", function(e){
         $amount += 20;
         console.log($amount);
         $(".feed").load("index.php .feed", 
-        {amount: $amount}, function(){})
+        {amount: $amount}, function(){
+            var descriptions = document.querySelector('.post-description').innerHTML;
+            for(var i = 0; i < descriptions.length; i++){
+                var repl = descriptions[i].replace(/#(\w+)/g, '<a href="hashtag.php?hashtag=$1">#$1</a>');
+                descriptions[i].innerHTML = repl;
+            };
+        });
+        
+        
+
         e.preventDefault();
 
-        <?php 
+        <?php
         $totalAmount = $post->countPosts();
         ?>
 
-        if(<?php echo $totalAmount ?> <= $amount){
+        if(<?php echo $totalAmount; ?> <= $amount){
             $('#loadmore').hide();
         }
     });
 
     
 
-    $(".post").on('click', function(){
-        var img = $(this).children(img).attr("src");
-        var postUser = $(this).children('.post-user');
+    function openModal(postId){
+        var post = $("[data-id = " + postId + "]")
+        var img = post.children(img).attr("src");
+        var postUser = post.children('.post-user');
         var username = postUser.children('.post-username').html();
         var description = postUser.children('.post-description').html();
         var timestamp = postUser.children('.post-timestamp').html();
+
+        console.log('img');
         
         $("#modalImage").attr("src", img);
         $("#modalUsername").html(username);
@@ -129,7 +141,7 @@
         $("#modalTimestamp").html(timestamp);
 
         $('#modal').removeClass('hidden');        
-    })
+    }
 
     function closeModal(){
         $("#modal").addClass('hidden');
