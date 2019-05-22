@@ -1,22 +1,21 @@
 <?php
-include_once("bootstrap.php");
+include_once 'bootstrap.php';
 // get user and password from POST
-if(!empty($_POST)){
-    $username = $_POST['username'];
+if (!empty($_POST)) {
+    $username = ($_POST['username']);
     $password = $_POST['password'];
 
-	$user = new User();
-	$user->setUsername($username);
-	$user->setPassword($password);
-	//check if user can login (use function)
-	$data = $user->CanILogin();
-    if($data != false){
+    $user = new User();
+    $user->setUsername($username);
+    $user->setPassword($password);
+    //check if user can login (use function)
+    $data = $user->CanILogin();
+    if ($data != false) {
         $_SESSION['user'] = $data;
         // if ok -> redirect to index.php
         header('Location: index.php');
-    }
-    else {
-        $error = "Login failed";
+    } else {
+        $error = 'Login failed';
     }
 }
 
@@ -33,7 +32,7 @@ if(!empty($_POST)){
 			<form action="" method="post">
 				<h2 form__title>Sign In</h2>
 
-				<?php if( isset($error) ): ?>
+				<?php if (isset($error)): ?>
 				<div class="form__error">
 					<p>
 						Sorry, we can't log you in with that username and password. Can you try again?

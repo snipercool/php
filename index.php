@@ -1,9 +1,9 @@
-<?php 
-    require_once('bootstrap.php');
-    
-	if($_SESSION['user'][0] == null){
-		header('location: login.php');
-	}else{
+<?php
+    require_once 'bootstrap.php';
+
+    if ($_SESSION['user'][0] == null) {
+        header('location: login.php');
+    } else {
     }
 
     $post = new Post();
@@ -21,10 +21,10 @@
     <title>Sockening</title>
 </head>
 <body>
-<a  href="<?php echo "user.php?id=$get" ?>"><?php echo $_SESSION['user'][1]; ?></a>
-<?php 
-    require_once('includes/upload.inc.php');
-    require_once('includes/nav.inc.php');
+<a  href="<?php echo "user.php?id=$get"; ?>"><?php echo $_SESSION['user'][1]; ?></a>
+<?php
+    require_once 'includes/upload.inc.php';
+    require_once 'includes/nav.inc.php';
 ?>
 <div class="feedContainer">
     <div class="feed" id="feed">
@@ -38,10 +38,12 @@
 
         <?php
         $i = 0;
-        foreach($posts as $p): ?>
-            <div class="post post<?php echo $i ?>" data-id="<?php echo $p['id'] ?>">
-                <img src='<?php echo $p['image']?>' alt="post image" class="post-image <?php echo $p['filter']; ?>"  onClick=openModal(<?php echo $p['id']?>)>
-                <?php 
+        foreach ($posts as $p): ?>
+        
+            <div class="post post<?php echo $i; ?>" data-id="<?php echo $p['id']; ?>">
+                
+                <img src='<?php echo $p['image']; ?>' alt="post image" class="post-image <?php echo $p['filter']; ?>"  onClick=openModal(<?php echo $p['id']; ?>)>
+                <?php
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);
 
@@ -51,8 +53,11 @@
                 <div class="post-user">
                     <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
                     <p class="post-username"><?php echo $u['username']; ?></p>
+                    <p class="post-location"> <?php echo $p['city']; ?></p>
                     <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
+                    
+
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
