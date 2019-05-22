@@ -17,15 +17,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
-    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="dist/css/app.css">
     <title>Sockening</title>
 </head>
 <body>
-<a  href="<?php echo "user.php?id=$get"; ?>"><?php echo $_SESSION['user'][1]; ?></a>
-<?php
-    require_once 'includes/upload.inc.php';
-    require_once 'includes/nav.inc.php';
+<?php 
+    require_once('includes/upload.inc.php');
+    require_once('includes/nav_mobile.inc.php');
+    require_once('includes/nav.inc.php');
+    
+   
 ?>
+<a class="logo" href="index.php"><img class="logo__images" src="images/Logo.svg" alt="Logo"></a>
 <div class="feedContainer">
     <div class="feed" id="feed">
         <?php
@@ -38,12 +41,10 @@
 
         <?php
         $i = 0;
-        foreach ($posts as $p): ?>
-        
-            <div class="post post<?php echo $i; ?>" data-id="<?php echo $p['id']; ?>">
-                
-                <img src='<?php echo $p['image']; ?>' alt="post image" class="post-image <?php echo $p['filter']; ?>"  onClick=openModal(<?php echo $p['id']; ?>)>
-                <?php
+        foreach($posts as $p): ?>
+            <div class="post post<?php echo $i ?>">
+                <a href=""><img src='<?php echo $p['image']?>' alt="post image" class="post-image"></a>
+                <?php 
                     $user = new User();
                     $u = $user->getUserById($p['user_id']);
 
@@ -59,8 +60,8 @@
                     
 
                 </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
+                <div class="likes"><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
+                <div class="report"><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
             </div>
             <?php if ($i < 2) {
                     ++$i;
