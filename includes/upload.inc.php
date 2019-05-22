@@ -1,11 +1,11 @@
-<?php 
-    
-    $filter = "";
-    if(!empty($_POST)){
+<?php
+
+    $filter = '';
+    if (!empty($_POST)) {
         $post = new Post();
         $hashtag = new Hashtag();
         $image = $post->createImageName();
-        if($post->checkImage($image)){
+        if ($post->checkImage($image)) {
             $post->setImage($image);
             if($post->checkDescription($_POST["description"])){
                 $post->setDescription(htmlspecialchars($_POST["description"]));
@@ -15,6 +15,7 @@
                     $hashtag->checkHashtag($h);
                 }
                 $post->setFilter($_POST["filter"]);
+                $post->setCity();
                 $post->uploadImage();
                 //header("Location: index.php");
             }
@@ -34,7 +35,11 @@
         <input type="file" name="fileToUpload" id="fileToUpload" onchange="loadFile(event)">
         <textarea name="description" id="description" placeholder="Write about your picture"></textarea>
         <input type="text" id="filterField" name="filter" class="hidden">
+<<<<<<< HEAD
         <input type="text" id="hashtagField" name="hashtags">
+=======
+        <input type="text" id="location" name="location" class="hidden">
+>>>>>>> 0136601eb44fc87edeabb98ea0671938804ea082
         <button type="submit" value="Upload Image" name="submit" id="btnSubmit" class="btn">Submit</button>
     </form>
     
