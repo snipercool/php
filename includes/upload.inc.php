@@ -3,14 +3,20 @@
     $filter = "";
     if(!empty($_POST)){
         $post = new Post();
+        $hashtag = new Hashtag();
         $image = $post->createImageName();
         if($post->checkImage($image)){
             $post->setImage($image);
             if($post->checkDescription($_POST["description"])){
-                $post->setDescription($_POST["description"]);
+                $post->setDescription(htmlspecialchars($_POST["description"]));
+                $hashtags = $_POST['hashtags'];
+                $hashtagsArray = explode(" ", $hashtags);
+                foreach($hashtagsArray as $h){
+                    $hashtag->checkHashtag($h);
+                }
                 $post->setFilter($_POST["filter"]);
                 $post->uploadImage();
-                header("Location: index.php");
+                //header("Location: index.php");
             }
         }
     }
@@ -28,6 +34,7 @@
         <input type="file" name="fileToUpload" id="fileToUpload" onchange="loadFile(event)">
         <textarea name="description" id="description" placeholder="Write about your picture"></textarea>
         <input type="text" id="filterField" name="filter" class="hidden">
+        <input type="text" id="hashtagField" name="hashtags">
         <button type="submit" value="Upload Image" name="submit" id="btnSubmit" class="btn">Submit</button>
     </form>
     
@@ -159,6 +166,26 @@
 
     $('#uploadForm').on('click', function(e){
         e.stopPropagation();
+    })
+
+    $('#btnSubmit').on('click', function(e){
+        var description = document.querySelector('#description').value;
+
+        var descArray = description.split(" ");
+        var hashtags = "";
+        for(var i = 0; i < descArray.length; i++){
+            if(descArray[i].startsWith("#")){
+                var hashtag = descArray[i].split(/\b\W/);
+                if(hashtags == ""){
+                    hashtags += hashtag[0];
+                }else{
+                    hashtags += " " + hashtag[0];
+                }
+                
+            };
+        };
+        $("#hashtagField").val(hashtags);
+        console.log(hashtags);
     })
 
 

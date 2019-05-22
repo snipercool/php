@@ -98,7 +98,7 @@
 
                     return false;
                 }
-                echo 'File is an image - '.$check['mime'].'.';
+                //echo 'File is an image - '.$check['mime'].'.';
 
                 return true;
             } else {
@@ -118,7 +118,7 @@
                 $statement->bindParam(':user_id', $_SESSION['user'][0]);
                 $statement->bindParam(':filter', $this->filter);
                 $statement->execute();
-                echo 'file '.$this->image.' has been uploaded with description '.$this->description.'and user_id '.$_SESSION['user'][0];
+                //echo 'file '.$this->image.' has been uploaded with description '.$this->description.'and user_id '.$_SESSION['user'][0];
             } else {
                 echo 'file has not been uploaded';
             }
@@ -127,7 +127,7 @@
         public function checkDescription($description)
         {
             if (!empty($description)) {
-                echo 'description is ok';
+                //echo 'description is ok';
 
                 return true;
             } else {
@@ -154,11 +154,50 @@
         public function getPosts($amount){
             try{
                 $conn = Db::getInstance();
-                $statement = $conn->prepare("select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC LIMIT :limit ");
-                $statement->bindValue(':limit', $amount, PDO::PARAM_INT);
-                $statement->bindValue(':user_id', $_SESSION['user'][0]);
-                $statement->execute();
-                $result = $statement->fetchAll();
+
+                $statement2 = $conn->prepare("select hashtag_id from followhashtag where user_id = :user_id ");
+                $statement2->bindValue(':user_id', $_SESSION['user'][0]);
+                $statement2->execute();
+                $hashtagIds = $statement2->fetchAll(PDO::FETCH_COLUMN, 0);
+
+                $hashtags = [];
+                foreach($hashtagIds as $hashtagId){
+                    $statement3 = $conn->prepare("select hashtag from hashtag where id = :hashtag_id");
+                    $statement3->bindValue(':hashtag_id', $hashtagId, PDO::PARAM_INT);
+                    $statement3->execute();
+                    array_push($hashtags, $statement3->fetch(PDO::FETCH_COLUMN, 0));
+                }
+                
+                $result = [];
+                foreach($hashtags as $hashtag){
+                    $statement1 = $conn->prepare("select * from post WHERE description like :hashtag ORDER BY timestamp DESC");
+                    $statement1->bindValue(':hashtag', '%' . $hashtag . '%');
+                    $statement1->execute();
+                    $resultHashtags = $statement1->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($resultHashtags as $h){
+                        array_push($result,  $h);
+                    }
+                }
+                
+               $statement4 = $conn->prepare("select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC");
+                $statement4->bindValue(':user_id', $_SESSION['user'][0]);
+                $statement4->bindValue(':hashtag', '%' . $hashtag . '%');
+                $statement4->execute();
+                $resultUsers = $statement4->fetchAll(PDO::FETCH_ASSOC);
+                foreach($resultUsers as $u){
+                    array_push($result, $u);
+                }
+
+                $result = array_map("unserialize", array_unique(array_map("serialize", $result)));  
+                usort($result, function($a, $b) {
+                    $ts1 = strtotime($a['timestamp']);
+                    $ts2 = strtotime($b['timestamp']);
+                    return $ts2 - $ts1;
+                });
+                
+                $result = array_slice($result, 0, $amount);
+
+
                 return $result;
             }catch( Throwable $t){
                 echo $t;
@@ -167,7 +206,7 @@
 
         public function countPosts(){
             $conn = Db::getInstance();
-            $statement = $conn->prepare('select * from post where user_id != :id and active = 1 LIMIT 20');
+            $statement = $conn->prepare('select count(*) as amount from post where user_id != :id and active = 1 LIMIT 20');
             $statement->bindParam(':id', $_SESSION['user'][0]);
             $statement->execute();
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -191,15 +230,16 @@
 
             if($today - $postDay == 1 && $month == $postMonth && $year == $postYear){
                 return "yesterday at " . date("H:i", $time);
-            }else if($year == $postYear){
-                return date("d M", $time) . " at " . date("H:i");
-            }else if($year != $postYear){
-                return date("d M Y", $time);
             }else if(($now - $time) >= 3600){
+                
                 if(($now - $time) < 7200 ){
                     return "1 hour ago";
-                }else{
-                    return ceil(($now - $time)/3600) . "hours ago";
+                }else if (($now - $time) < 86400){
+                    return ceil(($now - $time)/3600) . " hours ago";
+                }else if($year == $postYear){
+                    return date("d M", $time) . " at " . date("H:i", $time);
+                }else if($year != $postYear){
+                    return date("d M Y", $time);
                 }
             }else if (($now - $time) < 3600 ){
                 if(($now-$time < 300)){
@@ -216,6 +256,16 @@
             $statement->execute();
             $resultpost = $statement->fetchAll();
             return $resultpost;
+        }
+
+        public function getPostsbyHashtag($hashtag){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from post where description LIKE :hashtag");
+            $statement->bindValue(':hashtag', "%" . $hashtag . "%");
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return $result;
         }
 
         public function getLikes($id)
@@ -248,4 +298,6 @@
             $statement->bindValue(':id', $postId);
             $statement->execute();
         }
+
+        
     }
