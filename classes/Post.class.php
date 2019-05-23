@@ -282,7 +282,6 @@
             $statement->bindValue(':postid', $id);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-
             return $result['count'];
         }
 

@@ -63,7 +63,7 @@
                     
 
                 </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
+                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like" onclick="updateLike(event)">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
             </div>
             <?php if ($i < 2) {
@@ -92,7 +92,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   
-<script language="JavaScript" type="text/javascript" src="js/check_like.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/get_location.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/check_inappropriate.js"></script>
 <script type="text/javascript">
@@ -159,6 +158,35 @@
     function closeModal(){
         $("#modal").addClass('hidden');
     }
+
+    function updateLike(event) {
+    var postId = event.target.getAttribute("data-id");
+    var link = $(`.like[data-id = ${postId}]`);
+    console.log(link)
+
+    $.ajax({
+        method: "POST",
+        url: "ajax/like.php",
+        data: { postId: postId, }, 
+        dataType: 'json'
+    })
+    .done(function( res ) {
+        if (res.status == "liked") {
+            var likes = link.next().html();
+            likes++;
+            link.next().html(likes);	
+        } else if (res.status == "unliked") {
+            var likes = link.next().html();
+            likes--;
+            link.next().html(likes);	
+        }
+    });
+
+    event.preventDefault();
+    
+};
+
+
 </script>
     
 </body>
