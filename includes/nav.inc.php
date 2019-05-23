@@ -1,6 +1,6 @@
 <div class="navContainer">
     <div class="nav">
-        <div class="btn uploadBtn" id="uploadBtn">+</div>
+        <div class="btn uploadBtn" id="uploadBtn"><img src="images/add.png" alt="add"></div>
     </div>
 </div>
 

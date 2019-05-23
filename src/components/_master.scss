@@ -1,3 +1,4 @@
+/** --EVERY PAGE-- **/
 *{
     box-sizing: border-box;
     margin: 0;
@@ -5,34 +6,41 @@
 }
 
 body{
-    font-family: 'Josefin Sans';
-    background-color: #F7F2DC;
+    font-family: $font;
+    background-color: $background;
 }
 
 .hidden{
     display: none;
 }
-
+.logo img{
+    width: 250px;
+    height: 190px
+}
 /** NAV **/
+
+
 .navContainer{
     position: fixed;
-    left: 50%;
+    left: $half;
     transform: translateX(-50%);
     bottom: 3%;
+    .nav{
+        position: relative;
+        background-color: white;
+    }
+    
+    .uploadBtn{
+        position: absolute;
+        left: $half;
+        top: $half;
+        transform: translate(-50%, -50%);
+        display: inline-block;
+        cursor: pointer
+    }
 }
 
-.nav{
-    position: relative;
-}
 
-.uploadBtn{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: inline-block;
-    cursor: pointer
-}
 
 
 /** UPLOAD FORM **/
@@ -41,7 +49,7 @@ body{
     position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
+    width: $full;
     height: 100vh;
     background-color: rgba(0,0,0,0.6);
     z-index: 999;
@@ -51,8 +59,8 @@ body{
     position: absolute;
     display: inline-block;
     width: 75%;
-    left: 50%;
-    top: 50%;
+    left: $half;
+    top: $half;
     transform: translate(-50%, -50%);
     text-align: center;
     border: 5px solid #FFE76A;
@@ -102,13 +110,13 @@ body{
 /** FEED LIST **/
 .feedContainer{
     display: inline-block;
-    width: 100%;
+    width: $full;
 }
 
 .feed{
     display: inline-block;
     text-align: center;
-    width: 100%;
+    width: $full;
 }
 
 .post{
@@ -116,6 +124,7 @@ body{
     max-width: 80%;
     max-height: 80%;
     margin: 2%;
+    padding: 0px 20px 0px 15px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px 10px 0px 0px;
 }
@@ -123,8 +132,8 @@ body{
 .post-image{
     display: inline-block;
     margin: 2% auto;
-    width: 80%;
-    height: 40%;
+    width: 265px;
+    height: 320px;
     object-fit: cover;
     border-radius: 10px 10px 0px 0px;
     margin-top: 20px;
@@ -134,16 +143,17 @@ body{
 .post-avatar{
     display: inline-block;
     grid-column: 1/ span 1;
-    grid-row: 1/ span 2;
+    grid-row: 1/ span 3;
     padding: 2%;
 }
 
 .post-user{
     display: grid;
-    grid-template-columns: 50px 250px 50px 50px;
-    grid-template-rows: 1fr 1fr 1fr; 
+    grid-template-columns: 20% 75%;
+    grid-column-gap: 5%;
+    grid-template-rows: 1fr 1fr 3fr; 
     background-color: rgba(255, 255, 255, 0.5);
-    height: 70px;
+    height: 80px;
     padding-left: 2%;
 }
 
@@ -185,7 +195,23 @@ body{
 .post2{
     background-color: #EA563C;
 }
-
+.likes{
+    text-align: left;
+    color: #FFE76A;
+    padding-top: 5px;
+}
+.likes a{
+    text-decoration: none;
+    color: $lightblue;
+}
+.report{
+    text-align: right;
+    padding-bottom: 5px
+}
+.report a{
+    text-decoration: none;
+    color: darkred;
+}
 .loadmore{
     margin-bottom: 10%;
     cursor: pointer;
@@ -197,7 +223,7 @@ body{
     position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
+    width: $full;
     height: 100vh;
     background-color: rgba(0,0,0,0.6);
     z-index: 999;
@@ -205,8 +231,8 @@ body{
 
 .modal-content{
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: $half;
+    top: $half;
     transform: translate(-50%, -50%);
     background-color: white;
     text-align: center;
@@ -232,3 +258,8 @@ body{
     font-size: 200%;
     cursor: pointer;
 }
+/** --LOGIN/REGISTER PAGE-- **/
+
+/** --HOME PAGE-- **/
+
+/** --£USER/UPDATE PAGE-- **/
