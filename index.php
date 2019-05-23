@@ -38,6 +38,10 @@
 
         <?php
         $i = 0;
+        if(empty($posts)): ?>
+            <h1>No socks for you :( Follow people or hashtags to see their socks!</h1>
+        <?php 
+        else:
         foreach ($posts as $p): ?>
         
             <div class="post post<?php echo $i; ?>" data-id="<?php echo $p['id']; ?>">
@@ -53,7 +57,7 @@
                 <div class="post-user">
                     <img src="<?php echo $u['avatar']; ?>" alt="avatar" class="post-avatar">
                     <p class="post-username"><?php echo $u['username']; ?></p>
-                    <p class="post-location"> <?php echo $p['city']; ?></p>
+                    <p class="post-location"> <?php echo $p['location']; ?></p>
                     <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
                     
@@ -67,10 +71,12 @@
                 } else {
                     $i = 0;
                 } ?>
-        <?php endforeach; ?>
+        <?php endforeach; endif; ?>
 
     </div>
+    <?php if(!empty($posts)): ?>
     <button type="submit" class="btn loadmore" id="loadmore">Load More</button>
+    <?php endif; ?>
 </div>
 
 <div id="modal" class="hidden">
@@ -93,14 +99,16 @@
     var $amount = 20
     var $userId = <?php echo $_SESSION['user'][0]; ?>;
 
-    $('.feed').load("index.php .feed", {amount: $amount},function(){
-        var descriptions = document.querySelectorAll('.post-description');
-        for(var i = 0; i < descriptions.length; i++){
-            var repl = descriptions[i].innerHTML.replace(/#(\w+)/g, '<a href="hashtag.php?hashtag=$1">#$1</a>');
-            descriptions[i].innerHTML = repl;
-        };
+    <?php if(!empty($posts)): ?>
+        $('.feed').load("index.php .feed", {amount: $amount},function(){
+            var descriptions = document.querySelectorAll('.post-description');
+            for(var i = 0; i < descriptions.length; i++){
+                var repl = descriptions[i].innerHTML.replace(/#(\w+)/g, '<a href="hashtag.php?hashtag=$1">#$1</a>');
+                descriptions[i].innerHTML = repl;
+            };
 
-    })
+        })
+    <?php endif; ?>
 
 
     $("#loadmore").on("click", function(e){

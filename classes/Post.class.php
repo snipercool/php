@@ -185,7 +185,6 @@
 
                 $statement4 = $conn->prepare('select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC');
                 $statement4->bindValue(':user_id', $_SESSION['user'][0]);
-                $statement4->bindValue(':hashtag', '%'.$hashtag.'%');
                 $statement4->execute();
                 $resultUsers = $statement4->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($resultUsers as $u) {
@@ -328,6 +327,5 @@
                 $json = json_decode($response);
             }
             $this->city = $json->address->city_district;
-            console.log($this->city);
         }
     }
