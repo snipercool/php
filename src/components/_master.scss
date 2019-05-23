@@ -100,10 +100,36 @@ body{
 #preview{
     display: block;
     margin: 1% auto;
-    visibility: hidden;
-    height: 100px;
-    width: 100px;
+    max-width: 80%;
+    max-height: 40vh;
 }
+
+.filter{
+    position: relative;
+    visibility: hidden;
+}
+
+.arrow{
+    position: absolute;
+    display: inline-block;
+    font-size: 200%;
+    color:  black;
+    cursor: pointer;
+}
+
+.arrowNext{
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.arrowPrevious{
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
 
 
 
@@ -138,6 +164,7 @@ body{
     border-radius: 10px 10px 0px 0px;
     margin-top: 20px;
     margin-bottom: 10px;
+    z-index: 0;
 }
 
 .post-avatar{
@@ -177,8 +204,8 @@ body{
 
 .post-description{
     display: inline-block;
-    grid-column: 1/ 4;
-    grid-row: 3/ span 1;
+    grid-column: 1/ span 4;
+    grid-row: 3;
     padding: 0.5%;
     overflow: hidden;
 }
@@ -253,6 +280,9 @@ body{
 }
 
 .close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
     color: white;
     font-weight: bold;
     font-size: 200%;

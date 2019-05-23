@@ -1,31 +1,25 @@
 <?php
 
-	require_once("bootstrap.php");
-	
-	if ( !empty($_POST)) {
-		
-		$user = new User();
-		$user->setFullname($_POST['fullname']);
-		$user->setUsername($_POST['username']);        
-		$user->setEmail($_POST['email']);
-		$user->setPassword($_POST['password']);
-		$user->setPasswordConfirmation($_POST['password_confirmation']);
+    require_once 'bootstrap.php';
 
-		if($user->isAccountAvailable($_POST['email']) && $user->isUsernameAvailable($_POST['username'])){
-			$data = $user->register();
-			if($data != false) {
-				$_SESSION['user'] = $data;
-				header('location: index.php');
-			}else{
-				$error = true;
-			}
-		}
-		
-		
+    if (!empty($_POST)) {
+        $user = new User();
+        $user->setFullname(htmlspecialchars($_POST['fullname']));
+        $user->setUsername(htmlspecialchars($_POST['username']));
+        $user->setEmail(htmlspecialchars($_POST['email']));
+        $user->setPassword($_POST['password']);
+        $user->setPasswordConfirmation($_POST['password_confirmation']);
 
-	}
-    
-   
+        if ($user->isAccountAvailable($_POST['email']) && $user->isUsernameAvailable($_POST['username'])) {
+            $data = $user->register();
+            if ($data != false) {
+                $_SESSION['user'] = $data;
+                header('location: index.php');
+            } else {
+                $error = true;
+            }
+        }
+    }
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -41,10 +35,10 @@
 			<form action="" method="post">
 				<h2 form__title>Sign up for an account</h2>
 
-        <?php if(isset($error)): ?>
+        <?php if (isset($error)): ?>
 					<div class="form__error">
 						<p>
-							<?php echo "Something went wrong!"; ?>
+							<?php echo 'Something went wrong!'; ?>
 							
 						</p>
 					</div>
