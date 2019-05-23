@@ -174,7 +174,7 @@
 
                 $result = [];
                 foreach ($hashtags as $hashtag) {
-                    $statement1 = $conn->prepare('select * from post WHERE description like :hashtag ORDER BY timestamp DESC');
+                    $statement1 = $conn->prepare('select * from post WHERE description like :hashtag AND active = 1 ORDER BY timestamp DESC');
                     $statement1->bindValue(':hashtag', '%'.$hashtag.'%');
                     $statement1->execute();
                     $resultHashtags = $statement1->fetchAll(PDO::FETCH_ASSOC);
@@ -183,7 +183,7 @@
                     }
                 }
 
-                $statement4 = $conn->prepare('select * from post WHERE user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id ORDER BY timestamp DESC');
+                $statement4 = $conn->prepare('select * from post WHERE (user_id IN (SELECT followuser_id from follow where user_id = :user_id) OR user_id = :user_id) AND active = 1 ORDER BY timestamp DESC');
                 $statement4->bindValue(':user_id', $_SESSION['user'][0]);
                 $statement4->execute();
                 $resultUsers = $statement4->fetchAll(PDO::FETCH_ASSOC);

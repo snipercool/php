@@ -65,7 +65,7 @@
                     <p class="post-description"> <?php echo $p['description']; ?></p>
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like" onclick="updateLike(event)">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
-                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
+                <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate" onclick="updateInappropriate(event)">Report</a> </div>
             </div>
             <?php if ($i < 2) {
                     ++$i;
@@ -161,31 +161,56 @@
     }
 
     function updateLike(event) {
-    var postId = event.target.getAttribute("data-id");
-    var link = $(`.like[data-id = ${postId}]`);
-    console.log(link)
+        var postId = event.target.getAttribute("data-id");
+        var link = $(`.like[data-id = ${postId}]`);
+        console.log(link)
 
-    $.ajax({
+        $.ajax({
+            method: "POST",
+            url: "ajax/like.php",
+            data: { postId: postId, }, 
+            dataType: 'json'
+        })
+        .done(function( res ) {
+            if (res.status == "liked") {
+                var likes = link.next().html();
+                likes++;
+                link.next().html(likes);	
+            } else if (res.status == "unliked") {
+                var likes = link.next().html();
+                likes--;
+                link.next().html(likes);	
+            }
+        });
+
+        event.preventDefault();  
+    };
+
+    function updateInappropriate(event){
+        var postId = event.target.getAttribute("data-id");
+        var link = $(`.inappropriate[data-id = ${postId}]`);
+        console.log(link)
+
+        $.ajax({
         method: "POST",
-        url: "ajax/like.php",
-        data: { postId: postId, }, 
+        url: "ajax/check_inappropriate.php",
+        data: { postId: postId }, 
         dataType: 'json'
-    })
-    .done(function( res ) {
-        if (res.status == "liked") {
-            var likes = link.next().html();
-            likes++;
-            link.next().html(likes);	
-        } else if (res.status == "unliked") {
-            var likes = link.next().html();
-            likes--;
-            link.next().html(likes);	
-        }
-    });
+        })
+        .done(function( res ) {
+            if (res.status == "flagged") {
+                var reports = link.next().html();
+                reports++;
+                link.next().html(reports);	
+            } else if (res.status == "unflagged") {
+                var reports = link.next().html();
+                reports--;
+                link.next().html(reports);	
+            }
+        });
 
-    event.preventDefault();
-    
-};
+        event.preventDefault();
+    }
 
 
 </script>
