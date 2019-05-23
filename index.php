@@ -57,8 +57,6 @@
                     <p class="post-location"> <?php echo $p['city']; ?></p>
                     <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
-                    
-
                 </div>
                 <div class="likes"><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div class="report"><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>

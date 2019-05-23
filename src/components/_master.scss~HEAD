@@ -3,10 +3,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: $font;
 }
 
 body{
-    font-family: $font;
     background-color: $background;
 }
 
@@ -19,25 +19,63 @@ body{
 }
 /** NAV **/
 
-
+.mobile {
+    display: block;
+}
+.desktop{
+    display: none;
+}
 .navContainer{
     position: fixed;
     left: $half;
     transform: translateX(-50%);
-    bottom: 3%;
+    bottom: 0;
+    width: 100%;
     .nav{
         position: relative;
         background-color: white;
+        display: grid;
+        grid-template-columns: 30% 40% 30%;
+        height: 100px;
     }
-    
+    .nav--searchimg{
+        height: auto;
+        width: 60%;
+        grid-column: 1/ span 1;
+        justify-self: center;
+        align-self: center;
+    }
+    .nav--searchimg img{
+        width: 100%;
+    }
     .uploadBtn{
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 29px;
+        grid-column: 2/ span 1;
         position: absolute;
-        left: $half;
-        top: $half;
-        transform: translate(-50%, -50%);
-        display: inline-block;
-        cursor: pointer
+        bottom: -33px;
+        background-color: #F3F3F3;
+        border-color: #F3F3F3;
     }
+    .nav--userimg{
+        height: auto;
+        width: 60%;
+        grid-column: 3/span 3;
+        justify-self: center;
+        align-self: center;
+    }
+    .nav--userimg img{
+        width:100%;
+    }
+    .list{
+        list-style-type: none;
+    }
+    .list--items a{
+        color: $darkblue;
+        text-decoration: none;
+    }
+
 }
 
 
@@ -100,36 +138,10 @@ body{
 #preview{
     display: block;
     margin: 1% auto;
-    max-width: 80%;
-    max-height: 40vh;
-}
-
-.filter{
-    position: relative;
     visibility: hidden;
+    height: 100px;
+    width: 100px;
 }
-
-.arrow{
-    position: absolute;
-    display: inline-block;
-    font-size: 200%;
-    color:  black;
-    cursor: pointer;
-}
-
-.arrowNext{
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.arrowPrevious{
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-
 
 
 
@@ -147,7 +159,7 @@ body{
 
 .post{
     display: inline-block;
-    max-width: 80%;
+    width: 80%;
     max-height: 80%;
     margin: 2%;
     padding: 0px 20px 0px 15px;
@@ -158,13 +170,12 @@ body{
 .post-image{
     display: inline-block;
     margin: 2% auto;
-    width: 265px;
+    width: 100%;
     height: 320px;
     object-fit: cover;
     border-radius: 10px 10px 0px 0px;
     margin-top: 20px;
     margin-bottom: 10px;
-    z-index: 0;
 }
 
 .post-avatar{
@@ -191,6 +202,8 @@ body{
     text-align: left;
     padding: 1%;
     padding-bottom: 0;
+    text-decoration: none;
+    color: white;
 }
 
 .post-timestamp{
@@ -204,8 +217,8 @@ body{
 
 .post-description{
     display: inline-block;
-    grid-column: 1/ span 4;
-    grid-row: 3;
+    grid-column: 1/ 4;
+    grid-row: 3/ span 1;
     padding: 0.5%;
     overflow: hidden;
 }
@@ -224,7 +237,7 @@ body{
 }
 .likes{
     text-align: left;
-    color: #FFE76A;
+    color: whitesmoke;
     padding-top: 5px;
 }
 .likes a{
@@ -240,7 +253,7 @@ body{
     color: darkred;
 }
 .loadmore{
-    margin-bottom: 10%;
+    margin-bottom: 50%;
     cursor: pointer;
 }
 
@@ -280,9 +293,6 @@ body{
 }
 
 .close{
-    position: absolute;
-    right: 10px;
-    top: 10px;
     color: white;
     font-weight: bold;
     font-size: 200%;
@@ -292,4 +302,80 @@ body{
 
 /** --HOME PAGE-- **/
 
-/** --£USER/UPDATE PAGE-- **/
+/** --USER/UPDATE PAGE-- **/
+
+/** --DESKTOP-- **/
+@media screen and (min-width: 960px){
+    .desktop{
+        display: block;
+    }
+    .mobile{
+        display: none;
+    }
+    .post{
+        width:25%;
+    }
+    
+.mobile {
+    display: block;
+}
+.desktop{
+    display: none;
+}
+.navContainer{
+    position: absolute;
+    right: 20px;
+    transform: translateX(0);
+    top: 40px;
+    width: 30%;
+    left: auto;
+    .nav{
+        position: relative;
+        background-color: transparent;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        height: 100px;
+        align-content: center;
+        justify-content: center;
+    }
+    .nav--searchimg{
+        height: auto;
+        width: 30%;
+        grid-column: 1/ span 1;
+        
+    }
+    .nav--searchimg img{
+        width: 100%;
+    }
+    .uploadBtn{
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 29px;
+        grid-column: 2/ span 1;
+        position: unset;
+        bottom: -33px;
+        background-color: transparent;
+        border-color: transparent;
+    }
+    .uploadBtn img{
+        width:70%;
+    }
+    .nav--userimg{
+        height: auto;
+        width: 30%;
+        grid-column: 3/span 3;
+        justify-self: center;
+        align-self: center;
+    }
+    .nav--userimg img{
+        width:100%;
+    }
+}
+.loadmore{
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+
+
+
+}

@@ -5,7 +5,7 @@ $("a.like").on("click", function(e) {
     $.ajax({
         method: "POST",
         url: "ajax/like.php",
-        data: { postId: postId, }, 
+        data: { postId: postId }, 
         dataType: 'json'
     })
     .done(function( res ) {

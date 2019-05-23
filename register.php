@@ -38,7 +38,7 @@
         <?php if (isset($error)): ?>
 					<div class="form__error">
 						<p>
-							<?php echo 'Something went wrong!'; ?>
+							<?php echo 'Your 2 passwords must be the same!'; ?>
 							
 						</p>
 					</div>
