@@ -1,5 +1,5 @@
 <?php
-    require_once 'bootstrap.php';
+    require_once('bootstrap.php');
 
     if ($_SESSION['user'][0] == null) {
         header('location: login.php');
@@ -17,15 +17,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
-    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="dist/css/app.css">
     <title>Sockening</title>
 </head>
 <body>
-<a  href="<?php echo "user.php?id=$get"; ?>"><?php echo $_SESSION['user'][1]; ?></a>
-<?php
-    require_once 'includes/upload.inc.php';
-    require_once 'includes/nav.inc.php';
+<?php 
+    require_once('includes/upload.inc.php');
+    require_once('includes/nav_mobile.inc.php');
+    require_once('includes/nav.inc.php');
+    
+   
 ?>
+<a class="logo" href="index.php"><img class="logo__images" src="images/Logo.svg" alt="Logo"></a>
 <div class="feedContainer">
     <div class="feed" id="feed">
         <?php
@@ -60,8 +63,6 @@
                     <p class="post-location"> <?php echo $p['location']; ?></p>
                     <p class="post-timestamp"><?php echo $time; ?></p>
                     <p class="post-description"> <?php echo $p['description']; ?></p>
-                    
-
                 </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='likebtn' class="like" onclick="updateLike(event)">Like</a> <span class='likes'><?php echo $post->getLikes($p['id']); ?></span> people like this </div>
                 <div><a href="index.php" data-id="<?php echo $p['id']; ?>" id='reportbtn' class="inappropriate">Report</a> </div>
